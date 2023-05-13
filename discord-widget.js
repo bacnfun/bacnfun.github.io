@@ -19,7 +19,7 @@ window.addEventListener('load', () => {
         let count = document.createElement('widget-header-count');
         head.append(logo, count);
         //footer
-        //let body = document.createElement('widget-body');
+        let body = document.createElement('widget-body');
         //footer
         let footer = document.createElement('widget-footer');
         let footerInfo = document.createElement('widget-footer-info');
@@ -51,23 +51,7 @@ window.addEventListener('load', () => {
                 //join button
                 joinButton.setAttribute('href', data.instant_invite);
                 joinButton.setAttribute('target', '_blank');
-                //users
-                data.members.forEach((user) => {
-                    let member = document.createElement('widget-member');
-                    let avatar = document.createElement('widget-member-avatar');
-                    let avatarIMG = document.createElement('img');
-                    let status = document.createElement(`widget-member-status-${user.status}`);
-                    let name = document.createElement('widget-member-name');
-                    let statusText = document.createElement('widget-member-status-text');
-                    avatarIMG.src = user.avatar_url;
-                    status.classList.add('widget-member-status');
-                    name.innerText = user.username;
-                    if (user.game) {
-                        statusText.innerText = user.game.name;
-                    }
-                    avatar.append(avatarIMG, status);
-                    member.append(avatar, name, statusText);
-                    body.append(member);
+
                 });
             });
         });
