@@ -33,7 +33,7 @@ window.addEventListener('load', () => {
         joinButton.innerText = '加入伺服器';
         footer.append(footerInfo, joinButton);
         //style
-        widget.innerHTML = '<link rel="stylesheet" href="https://bacnfun.github.io/discord-widget.">';
+        widget.innerHTML = '<link rel="stylesheet" href="https://bacnfun.github.io/discord-widget.css">';
         widget.style.height = height;
         widget.style.width = width;
         widget.style.setProperty("--color", color);
