@@ -19,7 +19,7 @@ window.addEventListener('load', () => {
         let count = document.createElement('widget-header-count');
         head.append(logo, count);
         //footer
-        let body = document.createElement('widget-body');
+        //let body = document.createElement('widget-body');
         //footer
         let footer = document.createElement('widget-footer');
         let footerInfo = document.createElement('widget-footer-info');
