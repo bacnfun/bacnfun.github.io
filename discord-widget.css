@@ -76,6 +76,7 @@ discord-widget widget-body {
   padding: 20px;
   overflow-x: hidden;
   overflow-y: scroll;
+  display:none;
 }
 discord-widget widget-body widget-member {
   position: relative;
