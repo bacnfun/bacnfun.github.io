@@ -3,8 +3,8 @@ window.addEventListener('load', () => {
     for (let widget of document.getElementsByTagName('discord-widget')) {
         //getting attributes
         let id = widget.getAttribute('id') ?? null;
-        let width = widget.getAttribute('width') ?? '350px';
-        let height = widget.getAttribute('height') ?? '500px';
+        let width = widget.getAttribute('width') ?? '100%';
+        let height = widget.getAttribute('height') ?? '116px';
         let footerText = widget.getAttribute('footerText') ?? '';
         let color = widget.getAttribute('color') ?? '#5865f2';
         let backgroundColor = widget.getAttribute('backgroundColor') ?? '#0c0c0d';
