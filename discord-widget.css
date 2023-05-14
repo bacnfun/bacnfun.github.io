@@ -207,6 +207,7 @@ discord-widget widget-footer widget-button-join {
   -webkit-transition: opacity 0.25s ease-out;
   -o-transition: opacity 0.25s ease-out;
   transition: opacity 0.25s ease-out;
+  cursor: pointer;
 }
 discord-widget widget-footer widget-button-join:hover {
   background-color: var(--buttonColor);
