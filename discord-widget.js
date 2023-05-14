@@ -29,7 +29,7 @@ window.addEventListener('load', () => {
                 window.open(joinButton.getAttribute('href') || '', joinButton.getAttribute('target') || '', '');
             }
         });
-        footerInfo.innerText = footerText;
+        footerInfo.innerText = '';
         joinButton.innerText = '加入伺服器';
         footer.append(footerInfo, joinButton);
         //style
