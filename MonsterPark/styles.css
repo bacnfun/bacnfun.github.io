@@ -1,0 +1,9 @@
+/* 設置背景圖為重複平鋪 */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('img/bg.png');
+    background-repeat: repeat;
+    background-size: 20px auto; /* 水平固定寬度為 20px，垂直自動調整以覆蓋 */
+    background-attachment: fixed; /* 讓背景圖在視窗放大時跟隨滾動 */
+}
