@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+	<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>七日怪公勳章倒數小工具</title>
@@ -268,14 +285,20 @@
 			z-index: 30; /* 確保在其他元素之下或之上，根據需要調整 */
 		}
 		
-		   /* 喇叭圖案和音樂控制按鈕 */
-        #playButton {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
+		/* 喇叭圖案和音樂控制按鈕，距離整個視窗左上角5% */
+		#playButton {
+			position: fixed;
+			bottom: 15%;
+			left: 15%;
+			width: 40px;
+			height: 40px;
+			cursor: pointer;
+			z-index: 100; /* 增加 z-index 確保在最上層 */
+		}
+
+        /* 音樂播放器隱藏，只控制播放狀態 */
+        #bgmPlayer {
+            display: none; /* 隱藏播放器，僅透過JavaScript控制 */
         }
     </style>
 </head>
@@ -283,13 +306,14 @@
 		
     <!-- 雲朵容器 -->
     <div class="clouds" id="cloudContainer">
-	<!-- YouTube 背景音樂 iframe -->
-    <iframe id="musicIframe" width="0" height="0" 
-        src="https://www.youtube.com/embed/SbUoiVCAkI0?autoplay=1&loop=1&playlist=SbUoiVCAkI0&controls=0"
-        frameborder="0" allow="autoplay; encrypted-media" style="position: absolute; top: 0; left: 0;"></iframe>
+	 <!-- 本地音樂播放器 -->
+			<audio id="bgmPlayer" loop autoplay>
+				<source src="bgm.ogg" type="audio/ogg">
+				您的瀏覽器不支援音頻元素。
+			</audio>
 
-    <!-- 喇叭圖示 -->
-    <img id="playButton" src="img/play.png" alt="音樂控制" style="position: absolute; top: 10px; left: 10px; width: 40px; height: 40px; cursor: pointer;">
+			<!-- 喇叭圖示，點擊控制播放狀態 -->
+			<img id="playButton" src="img/play.png" alt="音樂控制">
 
 	
         <img src="img/cloud_1.png" class="cloud" id="cloud1">
@@ -441,8 +465,6 @@
 			updateDisplay();
 		}
 
-		// 頁面載入時初始化顯示
-		window.onload = updateDisplay;
 
 
 
@@ -512,31 +534,30 @@
         adjustScale(); // 初始調整
 		
 		
-		let isPlaying = true; // 預設音樂是播放中的
-        const musicIframe = document.getElementById('musicIframe');
-        const playButton = document.getElementById('playButton');
+		 let isPlaying = true; // 預設音樂是播放中的
+				const bgmPlayer = document.getElementById('bgmPlayer');
+				const playButton = document.getElementById('playButton');
 
-        // 設定音量為20%（音量範圍是0到1）
-        function setVolume() {
-            musicIframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[0.2]}', '*');
-        }
+				// 設定音量為20%（音量範圍是0到1）
+				bgmPlayer.volume = 0.2; // 音量設為20%
 
-        // 音樂播放/暫停切換
-        playButton.addEventListener('click', function() {
-            if (isPlaying) {
-                // 暫停音樂
-                musicIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-                playButton.src = "img/play.png"; // 更換為暫停圖示（可以選擇不同圖示）
-            } else {
-                // 播放音樂
-                musicIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                playButton.src = "img/play.png"; // 更換為播放圖示
-            }
-            isPlaying = !isPlaying;
-        });
+				// 音樂播放/暫停切換
+				playButton.addEventListener('click', function() {
+					if (isPlaying) {
+						// 暫停音樂
+						bgmPlayer.pause();
+						playButton.src = "img/play.png"; // 更換為播放圖示（可以選擇不同圖示）
+					} else {
+						// 播放音樂
+						bgmPlayer.play();
+						playButton.src = "img/play.png"; // 更換為暫停圖示
+					}
+					isPlaying = !isPlaying;
+				});
 
-        // 設置音量並開始播放
-        setVolume();
+		// 頁面載入時初始化顯示看板+播放音樂
+		window.onload = function() { updateDisplay(); bgmPlayer.play(); };
+
     </script>
 </body>
 </html>
