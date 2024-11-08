@@ -706,6 +706,17 @@
 						// 判斷是否可以簽到
 						const todayDateStr = getTodayDateStr();
 						const storedDateStr = localStorage.getItem('daysign');
+						const now = new Date();
+						const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+						const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+						const todayKey = dayKeys[dayOfWeek]; // 獲取今天的key
+
+						// 判斷當天完成次數是否已達 77 次
+						if (signCounts[todayKey] >= 77) {
+							signButton.src = 'img/signtoday/signcomp2_4.png';
+							signButton.style.pointerEvents = 'none'; // 禁用按鈕
+							return;
+						}
 
 						if (storedDateStr === todayDateStr) {
 							// 已簽到，設置按鈕無法點擊
@@ -723,12 +734,24 @@
 								signButton.src = 'img/signtoday/signcomp2_3.png';
 							});
 							signButton.addEventListener('mouseup', () => {
-								// 執行簽到動作
-								updateSignCountForToday();
+								// 執行簽到動作，計算新完成次數
+								const newCount = signCounts[todayKey] + todaysigncount;
+								if (newCount > 77) {
+									signCounts[todayKey] = 77; // 設定為最大值 77
+								} else {
+									signCounts[todayKey] = newCount;
+								}
+
+								// 更新 localStorage 並顯示
+								localStorage.setItem('signCounts', JSON.stringify(signCounts));
 								localStorage.setItem('daysign', todayDateStr);
 
+								// 更新顯示
+								updateSignCounts();
+								displayTotal();
+
 								// 更新按鈕狀態
-								signButton.style.pointerEvents = 'none'; // 禁止點擊
+								signButton.style.pointerEvents = 'none'; // 禁用按鈕
 								signButton.src = 'img/signtoday/signcomp2_4.png';
 							});
 						}
@@ -751,6 +774,11 @@
 
 						const todayKey = dayKeys[dayOfWeek]; // 獲取今天的key
 						signCounts[todayKey] += todaysigncount; // 更新今日簽到次數
+
+						// 確保總次數不超過 77
+						if (signCounts[todayKey] > 77) {
+							signCounts[todayKey] = 77;
+						}
 
 						// 儲存更新後的簽到次數
 						localStorage.setItem('signCounts', JSON.stringify(signCounts));
