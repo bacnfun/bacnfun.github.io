@@ -378,32 +378,39 @@
 				const baseX = 122;
 				const baseY = 42;
 
+				const digitWidths = {
+					'0': 14,
+					'1': 11,
+					'2': 13,
+					'3': 14,
+					'4': 16,
+					'5': 14,
+					'6': 15,
+					'7': 14,
+					'8': 15,
+					'9': 15
+				};
+
 				// 移除之前的數字圖片（如果有）
 				const existingImages = signboard.querySelectorAll('.total-digit');
 				existingImages.forEach(img => img.remove());
 
 				let currentX = baseX; // 用來追蹤每個數字的起始位置
 
-				// 延遲顯示數字圖片
-				setTimeout(() => {
-					// 顯示總和的每一位數字
-					totalStr.split('').forEach(digit => {
-						const img = document.createElement('img');
-						img.src = `img/signboard/${digit}.png`;  // 對應的數字圖片
-						img.className = 'total-digit';
-						img.style.position = 'absolute';
-						img.style.top = `${baseY}px`;
-
-						// 等待圖片加載完成後執行
-						img.onload = function() {
-							img.style.left = `${currentX}px`;  // 動態設置每個圖片的位置
-							currentX += img.width;  // 更新X軸位置為圖片的寬度
-
-							signboard.appendChild(img);  // 確保圖片加入到signboard中
-						}
-					});
-				}, 10); // 延遲 0.5 秒後顯示數字
+				// 顯示總和的每一位數字
+				totalStr.split('').forEach(digit => {
+					const img = document.createElement('img');
+					img.src = `img/signboard/${digit}.png`;  // 對應的數字圖片
+					img.className = 'total-digit';
+					img.style.position = 'absolute';
+					img.style.top = `${baseY}px`;
+					img.style.left = `${currentX}px`; // 動態設置每個圖片的位置
+					currentX += digitWidths[digit]; // 更新X軸位置為圖片的寬度
+					signboard.appendChild(img); // 確保圖片加入到signboard中
+				});
 			}
+
+
 
 
 			// 預設資料：將角色名稱設為 "尚未設定角色"
