@@ -1,306 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-	<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="/manifest.json">
-	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-	<meta name="theme-color" content="#ffffff">
+	<link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="manifest.json">
+	<meta name="msapplication-TileImage" content="ms-icon-144x144.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>七日怪公勳章倒數小工具</title>
-    <style>
-        /* 設置背景顏色為黑色 */
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: black; /* 背景顏色設為黑色 */
-            overflow: hidden; /* 防止出現滾動條 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-			user-select: none; /* 禁止選擇 */
-			-webkit-user-select: none; /* 針對 Safari 和 Chrome 的前綴 */
-			-moz-user-select: none; /* 針對 Firefox 的前綴 */
-			-ms-user-select: none; /* 針對 IE 和 Edge 的前綴 */
-        }
-
-        /* 雲朵容器，依據比例顯示 */
-        .clouds {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            background-image: url('img/bg.png'); /* 設置背景圖 */
-            background-repeat: repeat; /* 重複背景圖 */
-            background-size: 20px auto; /* 設置背景圖大小 */
-        }
-
-        /* 每個雲朵的基本設定 */
-        .cloud {
-            position: absolute;
-            animation: moveClouds 65s linear infinite;
-        }
-
-        /* 雲朵移動的動畫效果 */
-        @keyframes moveClouds {
-            from {
-                transform: translateX(100vw); /* 從畫面右側外移入 */
-            }
-            to {
-                transform: translateX(-105vw); /* 向左移動出畫面更多，確保完全消失 */
-            }
-        }
-
-        /* 熱氣球設定 */
-        .balloon {
-            position: absolute;
-            animation: moveBalloons 90s linear infinite, swing 2s ease-in-out infinite; /* 修正動畫 */
-            top: 7%; /* 垂直位置 */
-        }
-
-        /* 熱氣球移動的動畫效果 */
-        @keyframes moveBalloons {
-            from {
-                left: 100vw; /* 從右側外移入 */
-            }
-            to {
-                left: -10vw; /* 向左移動出畫面 */
-            }
-        }
-
-        /* 熱氣球擺動的動畫效果 */
-        @keyframes swing {
-            0%, 100% {
-                transform: translateY(0); /* 起始位置 */
-            }
-            50% {
-                transform: translateY(-5px); /* 向上擺動 */
-            }
-        }
-
-
-		/* Yeti 的基本樣式 */
-		.yeti {
-			position: absolute;
-			width: 205px;  /* 設定 Yeti 的寬度 */
-			height: 205px; /* 設定 Yeti 的高度 */
-			top: 55%;      /* Yeti 的垂直位置 */
-			z-index: 10;   /* 確保 Yeti 位於湖泊上方 */
-			animation: moveYeti 85s linear infinite; /* 調整移動動畫時間至 85 秒 */
-		}
-
-		/* 移動動畫，從左至右 */
-		@keyframes moveYeti {
-			from {
-				transform: translateX(-100px); /* 從左邊邊緣外開始 */
-			}
-			to {
-				transform: translateX(100vw); /* 向右移動直到畫面外 */
-			}
-		}
-
-
-
-
-
-        /* 山脈背景的設定 */
-        .mountain {
-            position: absolute;
-            bottom: 20%; /* 貼齊底部 */
-        }
-
-        /* Montain_a 的位置 */
-        #mountainA {
-            left: 0; /* 貼齊左側 */
-        }
-
-        /* Montain_b 的位置 */
-        #mountainB {
-            left: 686px; /* Montain_a 的寬度 - 1，讓 Montain_b 貼齊 Montain_a */
-        }
-
-        /* 湖泊背景的設定 */
-        .lake {
-            position: absolute;
-            bottom: 10%; /* 貼齊底部，作為前景 */
-        }
-
-        /* Lake_a 的位置 */
-        #lakeA {
-            left: 0; /* 貼齊左側 */
-        }
-
-        /* Lake_b 的位置 */
-        #lakeB {
-            left: 889px; /* lake_a 的寬度 - 1，讓 lake_b 貼齊 lake_a */
-        }
-		
-		/* Jungle 前景圖片的樣式 */
-		/* Jungle 前景層設定 */
-		.jungleContainer {
-			position: absolute;
-			bottom: -5%; /* 置於最上方 */
-			left: 0; /* 置於最左側 */
-			width: 100%;
-			height: 434px;
-			background-image: url('img/jungle_0.png'); /* 設置背景圖片 */
-			background-repeat: repeat-x; /* 水平方向重複 */
-			background-size: auto 100%; /* 高度自適應，寬度保持比例 */
-			z-index: 20; /* 確保在其他圖片之上 */
-		}
-
-		
-		.jungle-bg1 {
-			position: absolute;
-            bottom: 0; /* 貼齊底部 */
-			left: 20%; /* 貼齊畫面左側 */
-			width: 1083px;
-			height: 259px;
-			z-index: 21; /* 設定較高的 z-index，確保在所有元素之上 */
-			pointer-events: none; /* 確保不影響點擊等互動 */
-		}
-		
-		.jungle-bg2 {
-			position: absolute;
-            bottom: 0; /* 貼齊底部 */
-			left: 10%; /* 貼齊畫面左側 */
-			width: 487px;
-			height: 451px;
-			z-index: 20; /* 設定較高的 z-index，確保在所有元素之上 */
-			pointer-events: none; /* 確保不影響點擊等互動 */
-		}
-		
-		.tower {
-			position: absolute;
-            bottom: 55%; 
-			left: 25%;
-			width: 171px;
-			height: 268px;
-			z-index: 19; /* 設定較高的 z-index，確保在所有元素之上 */
-			pointer-events: none; /* 確保不影響點擊等互動 */
-		}
-		
-		/* Board 圖片容器 */
-		.boardContainer {
-			position: absolute; /* 確保可以精確定位 */
-			bottom: 20%; /* 與頁面底部的距離 */
-			left: 25%; /* 與頁面左側的距離 */
-			z-index: 22; /* 確保在所有元素之上 */
-			
-		}
-
-		/* 可點擊範圍樣式 */
-		.clickableArea {
-			position: absolute; /* 使其絕對定位 */
-			width: 40px; /* 寬度 */
-			height: 40px; /* 高度 */
-			background-color: rgba(255, 255, 255, 0); /* 可見度設定為透明 */
-			cursor: pointer; /* 鼠標指針樣式 */
-			z-index: 23; /* 確保在 board 圖片之上 */
-		}
-
-		/* 第一個可點擊範圍位置 */
-		#clickableArea1 {
-			top: 331px; /* 設定距離圖片底部的距離 */
-			left: 190px; /* 設定距離圖片左側的距離 */
-		}
-
-		/* 第二個可點擊範圍位置 */
-		#clickableArea2 {
-			top: 331px; /* 設定距離圖片底部的距離 */
-			left: 270px; /* 設定距離圖片左側的距離 */
-		}
-
-
-
-
-		.shop {
-			position: absolute;
-            bottom: 128px; 
-			left: 0;
-			width: 416px;
-			height: 449px;
-			z-index: 23; /* 設定較高的 z-index，確保在所有元素之上 */
-			pointer-events: none; /* 確保不影響點擊等互動 */
-		}
-		
-		.shop_2 {
-			position: absolute;
-            bottom: 128px; 
-			left: 170px;
-			width: 158px;
-			height: 20px;
-			z-index: 23; /* 設定較高的 z-index，確保在所有元素之上 */
-			pointer-events: none; /* 確保不影響點擊等互動 */
-		}
-		
-		.fence {
-			position: absolute;
-            bottom: 128px; 
-			left: 298px;
-			width: 1584px;
-			height: 674px;
-			z-index: 22; /* 設定較高的 z-index，確保在所有元素之上 */
-			pointer-events: none; /* 確保不影響點擊等互動 */
-		}
-
-
-
-		/* 地板的樣式 */
-		.floor {
-			position: absolute; /* 可以根據需求調整位置 */
-			bottom: 60px; /* 垂直置底 */
-			left: 0; /* 水平置左 */
-			width: 100%; /* 佔滿整個寬度 */
-			height: 36px; /* 設定高度為地板素材的高度 */
-			background-image: url('img/Ground0_0.png'), url('img/Ground0_1.png'), url('img/Ground0_2.png');
-			background-repeat: repeat-x; /* 水平重複 */
-			background-size: 90px 36px; /* 每張圖的大小 */
-			z-index: 30; /* 確保在其他元素之下或之上，根據需要調整 */
-		}
-		.floor2 {
-			position: absolute; /* 可以根據需求調整位置 */
-			bottom: 0%; /* 垂直置底 */
-			left: 0; /* 水平置左 */
-			width: 100%; /* 佔滿整個寬度 */
-			height: 60px; /* 設定高度為地板素材的高度 */
-			background-image: url('img/Ground1_0.png'), url('img/Ground1_1.png'), url('img/Ground1_2.png'), url('img/Ground1_3.png'), url('img/Ground1_4.png'), url('img/Ground1_5.png');
-			background-repeat: repeat-x; /* 水平重複 */
-			background-size: 90px 60px; /* 每張圖的大小 */
-			z-index: 30; /* 確保在其他元素之下或之上，根據需要調整 */
-		}
-		
-		/* 喇叭圖案和音樂控制按鈕，距離整個視窗左上角5% */
-		#playButton {
-			position: fixed;
-			bottom: 15%;
-			left: 15%;
-			width: 40px;
-			height: 40px;
-			cursor: pointer;
-			z-index: 100; /* 增加 z-index 確保在最上層 */
-		}
-
-        /* 音樂播放器隱藏，只控制播放狀態 */
-        #bgmPlayer {
-            display: none; /* 隱藏播放器，僅透過JavaScript控制 */
-        }
-    </style>
+	
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 		
@@ -370,194 +90,63 @@
 		<!-- 地板A -->
 		<div class="floor"></div>
 		<div class="floor2"></div>
+		
+		<div id="npc">
+		  <img id="npc-image" src="img/NPC/stand.0.png" alt="NPC" width="115" height="86"/>
+		</div>
+		  <img id="npc-tag" src="img/NPC/npctag2.png" alt="npctag" width="115" height="45" />
+		  
+		<div id="signboard">
+			<div id="count-mon" class="sign-count">0</div>
+			<div id="count-tue" class="sign-count">0</div>
+			<div id="count-wed" class="sign-count">0</div>
+			<div id="count-thu" class="sign-count">0</div>
+			<div id="count-fri" class="sign-count">0</div>
+			<div id="count-sat" class="sign-count">0</div>
+			<div id="count-sun" class="sign-count">0</div>
+				<!-- 修正按鈕 -->
+				<div id="edit-button">
+				</div>
+
+				<!-- 確認和取消按鈕容器 (初始隱藏) -->
+				<div id="confirm-cancel-buttons" style="display: none; position: absolute; left: 184px; top: 145px;">
+					<img id="confirm-button" src="img/ok_1.png" alt="Confirm" width="83" height="26" 
+						onmouseover="this.src='img/ok_2.png'" onmouseout="this.src='img/ok_1.png'" onclick="confirmAction()">
+					<img id="cancel-button" src="img/cancel_1.png" alt="Cancel" width="83" height="26" 
+						style="margin-left: 5px;" onmouseover="this.src='img/cancel_2.png'" onmouseout="this.src='img/cancel_1.png'" onclick="cancelAction()">
+				</div>
+
+		</div>
+
 	</div>
-
-    <script>
-        const clouds = document.querySelectorAll('.cloud');
-        const balloons = document.querySelectorAll('.balloon');
-        const monsters = document.querySelectorAll('.monster'); // 取得怪物元素
-        const cloudContainer = document.getElementById('cloudContainer');
-        
-        function adjustScale() {
-            const aspectRatio = window.innerWidth / window.innerHeight;
-
-            if (aspectRatio > 16 / 9) { // 當比例大於16:9，則裁切
-                const scale = window.innerHeight / 768; // 以高度縮放
-                cloudContainer.style.transform = `scale(${scale})`;
-                cloudContainer.style.width = `${(16 / 9) * window.innerHeight}px`; // 寬度依比例計算
-                cloudContainer.style.marginLeft = `${-(((16 / 9) * window.innerHeight - window.innerWidth) / 2)}px`; // 置中
-                cloudContainer.style.height = '100vh'; // 確保高度是100vh
-            } else if (aspectRatio < 4 / 3) { // 當比例小於4:3，則裁切
-                const scale = window.innerWidth / 1366; // 以寬度縮放
-                cloudContainer.style.transform = `scale(${scale})`;
-                cloudContainer.style.height = `${(4 / 3) * window.innerWidth}px`; // 高度依比例計算
-                cloudContainer.style.marginTop = `${-(((4 / 3) * window.innerWidth - window.innerHeight) / 2)}px`; // 置中
-                cloudContainer.style.width = '100vw'; // 確保寬度是100vw
-            } else { // 在4:3到16:9之間，正常顯示
-                cloudContainer.style.transform = 'scale(1)';
-                cloudContainer.style.width = '100vw';
-                cloudContainer.style.height = '100vh';
-                cloudContainer.style.margin = '0';
-            }
-        }
-
-        function initCloud(cloud, index) {
-            const topPosition = 5 + Math.random() * 15; 
-            cloud.style.top = `${topPosition}%`;
-            cloud.style.zIndex = index;
-            const startPosition = Math.random() * 100; 
-            cloud.style.left = `${startPosition}vw`;
-        }
-
-        clouds.forEach((cloud, index) => {
-            initCloud(cloud, index);
-            cloud.addEventListener('animationiteration', () => {
-                initCloud(cloud, index);
-            });
-        });
-
-
-		// 定義每週的圖片路徑
-		const dayImages = {
-			1: "img/mon.png",
-			2: "img/tue.png",
-			3: "img/wed.png",
-			4: "img/thu.png",
-			5: "img/fri.png",
-			6: "img/sat.png",
-			7: "img/sun.png"
-		};
-
-		// 判斷今天是星期幾
-		let today = new Date().getDay();
-		if (today === 0) today = 7; // 將星期天調整為 7
-
-		let currentDay = today;
-
-		// 更新顯示的圖片
-		function updateDisplay() {
-			const dayImageElement = document.getElementById("day-image");
-			const todayOverlayElement = document.getElementById("today-overlay");
-
-			// 更新當前日期的圖片
-			dayImageElement.src = dayImages[currentDay];
-
-			// 若為今天，顯示 today.png，否則隱藏
-			if (currentDay === today) {
-				todayOverlayElement.style.display = "block";
-			} else {
-				todayOverlayElement.style.display = "none";
-			}
-		}
-
-		// 切換日期
-		function changeDay(offset) {
-			currentDay += offset;
-
-			// 確保在 1-7 之間循環
-			if (currentDay > 7) {
-				currentDay = 1;
-			} else if (currentDay < 1) {
-				currentDay = 7;
-			}
-
-			// 更新顯示
-			updateDisplay();
-		}
-
-
-
-
-
-	
-		// 獲取所有 Yeti 元素
-		const yeti1 = document.getElementById('yeti1');
-		const yeti2 = document.getElementById('yeti2');
-		// 定義圖片數量和動畫相關時間
-		const totalFrames = 17;
-		const animationDuration = 3.4 * 1000; // Yeti 行走動畫總時長 (毫秒)
-		const frameInterval = animationDuration / totalFrames;
-		const screenWidth = 100; // 屏幕寬度百分比
-		const offset = 80; // 間隔百分比
-
-		// 初始化 Yeti 1 和 Yeti 2 的位置差
-		yeti1.style.left = "0vw";
-		yeti2.style.left = `-80vw`; // Yeti 2 從左側畫面外開始
-
-		// 設置每隻 Yeti 的圖片切換動畫
-		function setupYetiAnimation(yeti) {
-			let frame = 0;
-			setInterval(() => {
-				yeti.src = `img/yeti_${frame}.png`;
-				frame = (frame + 1) % totalFrames;
-			}, frameInterval);
-		}
-
-		// 設定每隻 Yeti 的移動重置位置
-		function resetYetiPosition(yeti, otherYeti) {
-			const currentPosition = parseFloat(yeti.style.left);
-			const otherPosition = parseFloat(otherYeti.style.left);
+		<!-- 對話框 -->
+		<div id="dialog-box" style="display: none;">
+			<img id="dialog-bg" src="img/dlg/UtilDlgEx.png" width="519" height="228" style="position: absolute; top: 0; left: 0;">
+			<img id="close-button" src="img/dlg/BtClose_1.png" width="91" height="16" style="position: absolute; top: 206px; left: 15px;">
 			
-			// 當 yeti 離開畫面右側，重設位置到另一隻 Yeti 的左側 offset 距離
-			if (currentPosition >= screenWidth) {
-				yeti.style.left = `${(otherPosition - offset)}vw`;
-			}
-		}
-
-		// 初始化動畫和位置重設
-		setupYetiAnimation(yeti1);
-		setupYetiAnimation(yeti2);
-
-		// 定期檢查位置以確保間隔
-		setInterval(() => {
-			yeti1.style.left = `${parseFloat(yeti1.style.left) + 0.0585}vw`; // 控制移動步幅
-			yeti2.style.left = `${parseFloat(yeti2.style.left) + 0.0585}vw`;
-			resetYetiPosition(yeti1, yeti2);
-			resetYetiPosition(yeti2, yeti1);
-		}, 170); // 調整步幅的頻率來匹配 CSS 動畫速度
+			<!-- NPC 圖片動畫 -->
+			<div id="dianpc-image" class="npc-animation">
+				<img src="img/NPC/pet.0.png" alt="NPC">
+			</div>
+			
+			<div id="dianpc-name">
+				<img src="img/dlg/UtilDlgEx.bar.png" alt="Name Background">
+				<div class="dianpc-name">休菲凱曼</div>
+			</div>
+			
+			<div id="dialog-text"></div>
+			<div id="dialog-options"></div> <!-- 這裡會顯示選項 -->
+			<div id="dialog-input" style="display: none; position: absolute; top: 170px; left: 160px;"></div> <!-- 輸入框 -->
+		</div>
 
 
+</body>
+	<script src="system.js"></script>
+	<script src="dialogFunctions.js"></script>
+	<script src="union.js"></script>
+	<script src="script01.js" defer></script>
+	<script>
+	</script>
 
-        function initBalloon(balloon) {
-            balloon.style.left = '100vw'; // 初始位置設定為右側
-        }
-
-        balloons.forEach((balloon) => {
-            initBalloon(balloon);
-            balloon.addEventListener('animationiteration', () => {
-                initBalloon(balloon); // 當動畫結束時重新從右側進入
-            });
-        });
-		
-        // 調整縮放比例
-        window.addEventListener('resize', adjustScale);
-        adjustScale(); // 初始調整
-		
-		
-		 let isPlaying = true; // 預設音樂是播放中的
-				const bgmPlayer = document.getElementById('bgmPlayer');
-				const playButton = document.getElementById('playButton');
-
-				// 設定音量為20%（音量範圍是0到1）
-				bgmPlayer.volume = 0.2; // 音量設為20%
-
-				// 音樂播放/暫停切換
-				playButton.addEventListener('click', function() {
-					if (isPlaying) {
-						// 暫停音樂
-						bgmPlayer.pause();
-						playButton.src = "img/play.png"; // 更換為播放圖示（可以選擇不同圖示）
-					} else {
-						// 播放音樂
-						bgmPlayer.play();
-						playButton.src = "img/play.png"; // 更換為暫停圖示
-					}
-					isPlaying = !isPlaying;
-				});
-
-		// 頁面載入時初始化顯示看板+播放音樂
-		window.onload = function() { updateDisplay(); bgmPlayer.play(); };
-
-    </script>
 </body>
 </html>
