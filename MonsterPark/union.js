@@ -10,9 +10,8 @@ const worldNumber = {
 
 // 發送請求以獲取角色數據
 async function requestUnionRank(target) {
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    const apiUrl = "https://tw-event.beanfun.com/MapleStory/api/UnionWebRank/GetRank";
-    const url = proxyUrl + apiUrl;
+    // 使用你 Netlify 部署的 cors-proxy 函數的 URL
+    const proxyUrl = 'https://bacnfun-mapleunion.netlify.app/.netlify/functions/cors-proxy';
     const payload = {
         RankType: "3", // 3 = 總等級排行, 1 = 攻擊力排行
         GameWorldId: "-1",
@@ -20,7 +19,7 @@ async function requestUnionRank(target) {
     };
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(proxyUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
