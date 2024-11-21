@@ -1,38 +1,60 @@
-import { firestore } from './firebaseConfig.js';
-import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { firebaseApp } from "./firebaseConfig.js";
 
-async function generateLinkCode(localData) {
-  const linkCode = generateRandomCode();
-  const docRef = doc(firestore, "userID", linkCode);
+const db = getFirestore(firebaseApp);
 
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) return generateLinkCode(localData);
-
-  await setDoc(docRef, { ...localData, lastSyncDate: new Date().toISOString() });
-  localStorage.setItem("userID", linkCode);
-  return linkCode;
+// 判定同步狀態
+export function isSynchronized() {
+    const userID = localStorage.getItem('userID');
+    return Boolean(userID);
 }
 
-function generateRandomCode() {
-  const chars = "abcdefghjkmnpqrstuvwxyz23456789";
-  return Array.from({ length: 5 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
+// 發行引繼代碼
+export async function issueTransferCode(localData) {
+    const transferCode = generateTransferCode();
+    const isUnique = await checkCodeUnique(transferCode);
+    if (!isUnique) throw new Error("代碼重複，請重試");
+    await writeToFirestore(transferCode, localData);
+    localStorage.setItem('userID', transferCode);
+    return transferCode;
 }
 
-async function syncWithLinkCode(linkCode) {
-  const docRef = doc(firestore, "userID", linkCode);
-  const docSnap = await getDoc(docRef);
-
-  if (!docSnap.exists()) return { success: false, message: "代碼不存在" };
-
-  const remoteData = docSnap.data();
-  const localData = JSON.parse(localStorage.getItem("characterData")) || {};
-  
-  if (localData.CharacterName !== remoteData.CharacterName) {
-    return { success: true, data: remoteData, message: "角色資料不匹配，請確認是否同步" };
-  }
-
-  localStorage.setItem("characterData", JSON.stringify(remoteData));
-  return { success: true, message: "同步成功" };
+// 驗證引繼代碼
+export async function verifyTransferCode(code) {
+    const docRef = doc(db, "userID", code);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) return null;
+    return docSnap.data();
 }
 
-export { generateLinkCode, syncWithLinkCode };
+// 比較同步進度
+export function compareSyncProgress(localData, dbData) {
+    const localDate = localData.lastSignDate;
+    const dbDate = dbData.lastSignDate;
+    if (new Date(localDate) > new Date(dbDate)) {
+        return 'local';
+    } else if (new Date(localDate) < new Date(dbDate)) {
+        return 'database';
+    } else {
+        return 'equal';
+    }
+}
+
+// 寫入資料庫
+async function writeToFirestore(code, data) {
+    const docRef = doc(db, "userID", code);
+    await setDoc(docRef, data);
+}
+
+// 生成唯一代碼
+function generateTransferCode() {
+    const chars = "abcdefghjkmnpqrstuvwxyz23456789"; // 避免 1, l, 0, o
+    return Array.from({ length: 5 }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join("");
+}
+
+// 確認代碼唯一
+async function checkCodeUnique(code) {
+    const docRef = doc(db, "userID", code);
+    const docSnap = await getDoc(docRef);
+    return !docSnap.exists();
+}

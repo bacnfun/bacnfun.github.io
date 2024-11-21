@@ -79,43 +79,72 @@ function case9() {
 }
 
 
+// Case 10: 判定同步狀態
 function case10() {
-    const storedCode = localStorage.getItem('transferCode');
-    const syncStatus = storedCode ? "已同步" : "未同步";
-    const displayCode = storedCode ? `${storedCode} (請反白複製)` : "無";
+    const isSync = isSynchronized();
+    const userID = localStorage.getItem('userID');
+    const syncStatus = isSync ? "#e#b已同步" : "#e#r未同步";
+    const transferCode = userID ? `#e#r${userID}` : "無";
 
-    typeText(`簽到資料同步狀態： ${syncStatus}\r\n你的引繼代碼： ${displayCode}`);
+    typeText(`簽到資料同步狀態：${syncStatus}\r\n你的引繼代碼：${transferCode}`);
     const options = [];
-    if (!storedCode) options.push({ text: "發行引繼代碼", action: case11 });
+
+    if (!isSync) {
+        options.push({ text: "發行引繼代碼", action: case11 });
+    }
     options.push({ text: "輸入引繼代碼", action: case12 });
     showOptions(options);
 }
 
+// Case 11: 發行引繼代碼
 function case11() {
-    issueTransferCode()
+    closeDialog();
+    issueTransferCode(localStorageData)
         .then(code => {
-            typeText(`你的引繼代碼為： ${code}\r\n角色簽到資料設定資料庫同步完成！\r\n可以在其他裝置/瀏覽器輸入一樣的引繼代碼同步簽到資料！歡迎下次再使用！`);
+            openDialog();
+            typeText(`你的引繼代碼為：#e#r${code}\r\n角色簽到資料設定資料庫同步完成！\r\n可以在其他裝置/瀏覽器輸入一樣的引繼代碼同步簽到資料！`);
             showBtnOk();
         })
-        .catch(() => {
-            typeText("無法發行引繼代碼，請稍後再試。");
-            showBtnOk();
+        .catch(error => {
+            openDialog();
+            case18(error.message); // 顯示資料庫連線失敗
         });
 }
 
+// Case 12: 輸入引繼代碼
 function case12() {
     typeText("請輸入引繼代碼：");
     showInputField();
     showBtnNext(() => {
-        const inputCode = getInputFieldValue();
-        if (!inputCode) {
-            case13(); // 顯示錯誤
+        const code = getInputFieldValue();
+        if (!code) {
+            case19(); // 無輸入，跳至提示
         } else {
-            verifyTransferCode(inputCode);
+            closeDialog();
+            verifyTransferCode(code)
+                .then(data => {
+                    if (!data) {
+                        openDialog();
+                        case13(); // 引繼代碼不存在
+                    } else if (data.characterName !== localStorageData.characterName) {
+                        globalCharacterData = data;
+                        openDialog();
+                        case14(); // 資料不同
+                    } else {
+                        globalCharacterData = data;
+                        openDialog();
+                        case15(); // 簽到進度不同
+                    }
+                })
+                .catch(error => {
+                    openDialog();
+                    case18(error.message); // 資料庫連線失敗
+                });
         }
     });
 }
 
+// Case 13: 引繼代碼不存在
 function case13() {
     removeInputField();
     removeNextButton();
@@ -123,28 +152,50 @@ function case13() {
     showBtnOk();
 }
 
+// Case 14: 資料不同
 function case14() {
     removeInputField();
     removeNextButton();
     ShowChar(globalCharacterData.CharacterLookUrl);
-    typeText(`你輸入的角色為 #r${globalCharacterData.GameWorldName}#n伺服器 等級 #e#r${globalCharacterData.UnionLevel} #g職業 #e#r${globalCharacterData.JobName} #e#b${globalCharacterData.CharacterName}#n \r\n是否要套用該角色資料？`);
-    showBtnYesNo(() => syncDataFromFirestore(globalCharacterData), case17);
+    typeText(`\r\n\r\n\r\n你輸入的角色為 \r\n#r${globalCharacterData.GameWorldName}#n伺服器 等級 #e#r${globalCharacterData.UnionLevel} #g職業 #e#r${globalCharacterData.JobName} #e#b${globalCharacterData.CharacterName}#n \r\n#e#b是否要套用該角色資料？`);
+    showBtnYesNo(case16, case17);
 }
 
+// Case 15: 簽到進度不同
 function case15() {
+    const localData = calculateLocalSignCounts();
+    const dbData = calculateDatabaseSignCounts();
+    const syncSource = compareSyncProgress(localData, dbData);
+
     removeInputField();
     removeNextButton();
     ShowChar(globalCharacterData.CharacterLookUrl);
-    typeText(`你輸入的角色為 #e#b${globalCharacterData.CharacterName}\r\n本機最後簽到時間 XXXX-XX-XX (已簽到次數：XXX)\r\n資料庫最後簽到時間 XXXX-XX-XX (已簽到次數：XXX)\r\n是否以最新的資料進行簽到次數同步？`);
-    showBtnYesNo(() => syncDataFromFirestore(globalCharacterData), case17);
+    typeText(`你輸入的角色為 #e#b${globalCharacterData.CharacterName}\r\n本機最後簽到時間 ${localData.lastSignDate} (已簽到次數：${localData.totalSignCounts})\r\n資料庫最後簽到時間 ${dbData.lastSignDate} (已簽到次數：${dbData.totalSignCounts})\r\n是否以最新的${syncSource === 'local' ? "#e#r本機" : "#e#r資料庫"}資料進行簽到次數同步？`);
+    showBtnYesNo(case16, case17);
 }
 
+// Case 16: 確認同步完成
 function case16() {
     typeText("角色簽到資料設定資料庫同步完成！歡迎下次再使用！");
     showBtnOk();
 }
 
+// Case 17: 取消同步
 function case17() {
     typeText("等你想清楚了再來找我吧！");
+    showBtnOk();
+}
+
+// Case 18: 資料庫連線失敗
+function case18(errorMsg) {
+    typeText(`資料庫連線失敗：${errorMsg}`);
+    showBtnOk();
+}
+
+// Case 19: 未輸入代碼
+function case19() {
+    removeInputField();
+    removeNextButton();
+    typeText("你好像沒有輸入代碼耶？請重新輸入。");
     showBtnOk();
 }
