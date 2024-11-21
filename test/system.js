@@ -519,31 +519,47 @@
 				// 調用顯示角色資料的函數
 				displayCharacterInfo();
 
-				import { syncFromFirestore, syncToFirestore } from "./datasync.js";
+				// 從 datasync.js 匯入必要的函數
+				import {
+				  publishLinkCode,
+				  verifyAndSync,
+				  syncToFirestore,
+				  syncFromFirestore,
+				} from "./datasync.js";
 
-				// 頁面載入時檢查是否有 userID 並初始化
-				window.onload = async function () {
-				  const userID = localStorage.getItem("userID");
+				// 確認 localStorage 是否有 userID
+				const userID = localStorage.getItem("userID");
+
+				// 初始化同步的函數：檢查是否從 Firestore 獲取資料或使用本機資料
+				async function initializeSync() {
 				  if (userID) {
-					closeDialog();
+					// 若存在 userID，嘗試從 Firestore 同步資料
 					const result = await syncFromFirestore(userID);
 					if (result.success) {
-					  const { level, img, name, job, signCounts } = result.data;
-
-					  // 更新本地數據
-					  cha_level = level;
-					  cha_img = img;
-					  cha_name = name;
-					  cha_job = job;
-					  window.signCounts = signCounts || {};
-
-					  saveCharacterData();
-					  displayCharacterInfo();
+					  console.log("已從 Firestore 同步資料：", result.data);
+					  localStorage.setItem("characterData", JSON.stringify(result.data));
 					} else {
-					  console.error(result.message);
+					  console.error("從 Firestore 同步失敗：", result.message);
 					}
+				  } else {
+					// 若無 userID，保留本機資料
+					console.log("localStorage 中未找到 userID，將使用本機資料。");
 				  }
-				};
+				}
+
+				// 發行新引繼代碼並同步本機資料
+				async function handlePublishLinkCode() {
+				  const localData = JSON.parse(localStorage.getItem("characterData")) || {};
+				  const result = await publishLinkCode(localData);
+				  if (result.success) {
+					console.log("引繼代碼發行成功：", result.linkCode);
+				  } else {
+					console.error("引繼代碼發行失敗：", result.message);
+				  }
+				}
+				
+				// 將函數掛載到全域（供調試或其他模組使用）
+				window.handlePublishLinkCode = handlePublishLinkCode;
 
 
 
@@ -807,4 +823,5 @@
 						displayTotal();
 						displaySignControls();
 						displaySignButton(); // 新增顯示簽到按鈕
+						initializeSync; // 頁面載入時自動執行初始化同步
 					};

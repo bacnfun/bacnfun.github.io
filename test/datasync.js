@@ -81,3 +81,31 @@ export async function verifyAndSync(linkCode) {
 
   return { success: true, data };
 }
+
+// 比對並同步簽到資料
+export async function compareAndSyncSignData(linkCode) {
+  const result = await syncFromFirestore(linkCode);
+  if (!result.success) {
+    return { success: false, message: result.message };
+  }
+
+  const remoteData = result.data;
+  const localData = JSON.parse(localStorage.getItem("characterData")) || {};
+
+  const remoteLastSignDate = remoteData.lastSignDate || "0000-00-00";
+  const localLastSignDate = localData.lastSignDate || "0000-00-00";
+
+  // 判斷最新簽到數據
+  if (new Date(remoteLastSignDate) > new Date(localLastSignDate)) {
+    // 使用遠端資料覆蓋本地
+    localStorage.setItem("characterData", JSON.stringify(remoteData));
+    return { success: true, source: "remote", message: "使用遠端資料同步成功" };
+  } else if (new Date(remoteLastSignDate) < new Date(localLastSignDate)) {
+    // 將本地資料同步到遠端
+    await syncToFirestore(linkCode, localData);
+    return { success: true, source: "local", message: "使用本地資料同步成功" };
+  }
+
+  // 資料相同
+  return { success: true, source: "equal", message: "本地與遠端資料一致" };
+}
