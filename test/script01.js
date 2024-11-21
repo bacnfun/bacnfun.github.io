@@ -85,12 +85,23 @@ function case10() {
   const syncStatus = userID ? "#e#b已同步" : "#e#r未同步";
   const linkCode = userID ? `#e#r${userID}` : "無";
 
-  typeText(`簽到資料同步狀態： ${syncStatus}\n你的引繼代碼： ${linkCode}`);
+  // 顯示同步狀態和引繼代碼
+  typeText(`簽到資料同步狀態： ${syncStatus}\n#n你的引繼代碼： ${linkCode}`);
+
+  // 動態設置選項
+  const options = [
+    { text: "輸入引繼代碼", action: case12 } // 輸入引繼代碼選項固定顯示
+  ];
+
   if (!userID) {
-    showBtnOption("發行引繼代碼", case11);
+    // 若無 userID，顯示發行引繼代碼選項
+    options.unshift({ text: "發行引繼代碼", action: case11 });
   }
-  showBtnOption("輸入引繼代碼", case12);
+
+  // 顯示動態選項
+  showOptions(options);
 }
+
 
 function case11() {
   const localData = {
