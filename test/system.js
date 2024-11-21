@@ -519,55 +519,37 @@
 				// 調用顯示角色資料的函數
 				displayCharacterInfo();
 
-				import { syncFromFirestore, syncToFirestore } from './datasync.js';
 
-				// 頁面載入時同步資料庫資料
+							import {
+				  publishLinkCode,
+				  verifyAndSync,
+				  syncFromFirestore,
+				  syncToFirestore,
+				} from "./datasync.js";
+
+				// 頁面載入時檢查是否有 userID 並初始化
 				window.onload = async function () {
-					const userID = localStorage.getItem('userID');
-					if (userID) {
-						closeDialog(); // 確保對話框關閉避免多操作
-						const result = await syncFromFirestore(userID);
-						if (result.success) {
-							const { level, img, name, job, signCounts } = result.data;
-
-							cha_level = level;
-							cha_img = img;
-							cha_name = name;
-							cha_job = job;
-							window.signCounts = signCounts || {};
-
-							saveCharacterData(); // 更新本地儲存
-							displayCharacterInfo(); // 更新顯示
-						} else {
-							console.error(result.message);
-						}
-					} else {
-						console.log("未找到本地用戶ID，將使用本地資料");
-					}
-				};
-
-				// 提供同步本地資料到資料庫的函數
-				export async function syncLocalDataToFirestore() {
-					const userID = localStorage.getItem('userID');
-					if (!userID) {
-						console.error("無法同步，因為本地沒有發行的用戶ID");
-						return;
-					}
-
-					const localData = {
-						level: cha_level,
-						img: cha_img,
-						name: cha_name,
-						job: cha_job,
-						signCounts: window.signCounts || {},
-					};
-
-					const result = await syncToFirestore(userID, localData);
+				  const userID = localStorage.getItem("userID");
+				  if (userID) {
+					closeDialog();
+					const result = await syncFromFirestore(userID);
 					if (result.success) {
-						console.log(result.message);
+					  const { level, img, name, job, signCounts } = result.data;
+
+					  // 更新本地數據
+					  cha_level = level;
+					  cha_img = img;
+					  cha_name = name;
+					  cha_job = job;
+					  window.signCounts = signCounts || {};
+
+					  saveCharacterData();
+					  displayCharacterInfo();
 					} else {
-						console.error(result.message);
+					  console.error(result.message);
 					}
+				  }
+				};
 				}
 
 

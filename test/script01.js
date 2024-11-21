@@ -79,63 +79,64 @@ function case9() {
 }
 
 
+// Case 10: 判定同步狀態
 function case10() {
-    const isSync = isSynchronized(); // datasync.js 判定同步狀態
-    const userID = localStorage.getItem('userID');
-    const syncStatus = isSync ? "#e#b已同步" : "#e#r未同步";
-    const transferCode = userID ? `#e#r${userID}` : "無";
+  const userID = localStorage.getItem("userID");
+  const syncStatus = userID ? "#e#b已同步" : "#e#r未同步";
+  const linkCode = userID ? `#e#r${userID}` : "無";
 
-    typeText(`簽到資料同步狀態：${syncStatus}\r\n你的引繼代碼：${transferCode}`);
-    const options = [
-        ...(isSync ? [] : [{ text: "發行引繼代碼", action: case11 }]),
-        { text: "輸入引繼代碼", action: case12 }
-    ];
-    showOptions(options);
+  typeText(`簽到資料同步狀態： ${syncStatus}\n你的引繼代碼： ${linkCode}`);
+  if (!userID) {
+    showBtnOption("發行引繼代碼", case11);
+  }
+  showBtnOption("輸入引繼代碼", case12);
 }
 
 function case11() {
-    closeDialog();
-    issueTransferCode()
-        .then(code => {
-            openDialog();
-            typeText(`你的引繼代碼為：#e#r${code}\r\n角色簽到資料設定資料庫同步完成！`);
-            showBtnOk();
-        })
-        .catch(error => {
-            openDialog();
-            case18(error.message);
-        });
+  const localData = {
+    level: cha_level,
+    img: cha_img,
+    name: cha_name,
+    job: cha_job,
+    signCounts: window.signCounts,
+  };
+
+  closeDialog();
+  publishLinkCode(localData).then((result) => {
+    openDialog();
+    if (result.success) {
+      typeText(`你的引繼代碼為： #e#r${result.linkCode}\n角色簽到資料設定資料庫同步完成！`);
+      showBtnOk();
+    } else {
+      typeText(`發行失敗：${result.message}`);
+      showBtnOk();
+    }
+  });
 }
 
 function case12() {
-    typeText("請輸入引繼代碼：");
-    showInputField();
-    showBtnNext(() => {
-        const code = getInputFieldValue();
-        if (!code) {
-            case19();
-        } else {
-            closeDialog();
-            verifyTransferCode(code)
-                .then(data => {
-                    if (!data) {
-                        openDialog();
-                        case13();
-                    } else if (data.characterName !== localStorage.getItem('characterName')) {
-                        openDialog();
-                        case14(data);
-                    } else {
-                        openDialog();
-                        case15(data);
-                    }
-                })
-                .catch(error => {
-                    openDialog();
-                    case18(error.message);
-                });
-        }
+  typeText("請輸入引繼代碼：");
+  showInputField();
+  showBtnNext(() => {
+    const inputCode = getInputValue();
+    if (!inputCode) {
+      case19();
+      return;
+    }
+    closeDialog();
+    verifyAndSync(inputCode).then((result) => {
+      openDialog();
+      if (result.success) {
+        typeText("資料同步完成！");
+        showBtnOk();
+      } else {
+        typeText(result.message);
+        showBtnOk();
+      }
     });
+  });
 }
+
 
 // Case 13: 引繼代碼不存在
 function case13() {
