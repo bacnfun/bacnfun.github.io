@@ -413,127 +413,134 @@
 
 
 
-			// 預設資料：將角色名稱設為 "尚未設定角色"
-			let cha_name = '尚未設定角色'; // 字串形式的角色名稱
+				import { syncWithLinkCode } from './datasync.js';
 
-			// 角色等級、圖片路徑和職業
-			let cha_level = 10;  // 預設等級
-			let cha_img = 'img/signboard/defaultcha.png';  // 預設角色圖片
-			let cha_job = '初心者';  // 預設職業
+				// 預設資料：將角色名稱設為 "尚未設定角色"
+				let cha_name = '尚未設定角色'; // 字串形式的角色名稱
 
-			// 儲存角色資料到 localStorage
-			function saveCharacterData() {
-				const characterData = {
+				// 角色等級、圖片路徑和職業
+				let cha_level = 10;  // 預設等級
+				let cha_img = 'img/signboard/defaultcha.png';  // 預設角色圖片
+				let cha_job = '初心者';  // 預設職業
+
+				// 儲存角色資料到 localStorage
+				function saveCharacterData() {
+				  const characterData = {
 					level: cha_level,
 					img: cha_img,
 					name: cha_name,
-					job: cha_job
-				};
-				localStorage.setItem('characterData', JSON.stringify(characterData)); // 將資料轉為 JSON 字串並儲存
-			}
+					job: cha_job,
+				  };
+				  localStorage.setItem('characterData', JSON.stringify(characterData)); // 將資料轉為 JSON 字串並儲存
+				}
 
-			// 讀取角色資料從 localStorage
-			function loadCharacterData() {
-				const savedData = localStorage.getItem('characterData');
-				if (savedData) {
+				// 讀取角色資料從 localStorage
+				function loadCharacterData() {
+				  const savedData = localStorage.getItem('characterData');
+				  if (savedData) {
 					const characterData = JSON.parse(savedData); // 解析 JSON 字串
 					cha_level = characterData.level;
 					cha_img = characterData.img;
 					cha_name = characterData.name;
 					cha_job = characterData.job;
+				  }
 				}
-			}
 
-			// 顯示角色資料函數
-			function displayCharacterInfo() {
-				const signboard = document.getElementById('signboard');
+				// 顯示角色資料函數
+				function displayCharacterInfo() {
+				  const signboard = document.getElementById('signboard');
 
-				// 檢查是否已經存在角色資訊容器，存在則移除
-				let characterInfoContainer = document.getElementById('character-info-container');
-				if (characterInfoContainer) {
+				  // 檢查是否已經存在角色資訊容器，存在則移除
+				  let characterInfoContainer = document.getElementById('character-info-container');
+				  if (characterInfoContainer) {
 					characterInfoContainer.remove();
+				  }
+
+				  // 創建角色資訊容器
+				  characterInfoContainer = document.createElement('div');
+				  characterInfoContainer.id = 'character-info-container';
+				  characterInfoContainer.style.position = 'relative';
+
+				  // 顯示角色等級
+				  const levelElement = document.createElement('div');
+				  levelElement.textContent = `Lv. ${cha_level}`;
+				  levelElement.style.position = 'absolute';
+				  levelElement.style.left = '72px';
+				  levelElement.style.top = '23px';
+				  levelElement.style.fontFamily = 'SimSun';
+				  levelElement.style.fontSize = '12px';
+				  levelElement.style.color = 'white';
+				  levelElement.style.fontWeight = 'bold';
+				  characterInfoContainer.appendChild(levelElement);
+
+				  // 顯示角色圖片
+				  const imgElement = document.createElement('img');
+				  imgElement.src = cha_img;
+				  imgElement.style.position = 'absolute';
+				  imgElement.style.left = '20px';
+				  imgElement.style.top = '35px';
+				  imgElement.style.width = '100px';
+				  imgElement.style.height = '100px';
+				  characterInfoContainer.appendChild(imgElement);
+
+				  // 顯示角色名稱
+				  const nameElement = document.createElement('div');
+				  nameElement.textContent = cha_name;
+				  nameElement.style.position = 'absolute';
+				  nameElement.style.left = '70px';
+				  nameElement.style.top = '140px';
+				  nameElement.style.fontFamily = 'SimSun';
+				  nameElement.style.fontSize = '12px';
+				  nameElement.style.color = 'white';
+				  nameElement.style.textAlign = 'center';
+				  nameElement.style.transform = 'translate(-50%, -50%)';
+				  characterInfoContainer.appendChild(nameElement);
+
+				  // 顯示角色職業
+				  const jobElement = document.createElement('div');
+				  jobElement.textContent = cha_job;
+				  jobElement.style.position = 'absolute';
+				  jobElement.style.left = '70px';
+				  jobElement.style.top = '160px';
+				  jobElement.style.fontFamily = 'SimSun';
+				  jobElement.style.fontSize = '12px';
+				  jobElement.style.color = 'white';
+				  jobElement.style.textAlign = 'center';
+				  jobElement.style.transform = 'translate(-50%, -50%)';
+				  characterInfoContainer.appendChild(jobElement);
+
+				  // 將角色資訊容器添加到 signboard
+				  signboard.appendChild(characterInfoContainer);
 				}
 
-				// 創建角色資訊容器
-				characterInfoContainer = document.createElement('div');
-				characterInfoContainer.id = 'character-info-container';
-				characterInfoContainer.style.position = 'relative'; // 設定必要樣式
+				// 調用讀取角色資料
+				loadCharacterData(); // 加載資料
 
-				// 顯示角色等級
-				const levelElement = document.createElement('div');
-				levelElement.textContent = `${cha_level}`;
-				levelElement.style.position = 'absolute';
-				levelElement.style.left = '72px';
-				levelElement.style.top = '23px';
-				levelElement.style.fontFamily = 'SimSun';
-				levelElement.style.fontSize = '12px';
-				levelElement.style.color = 'white';
-				levelElement.style.fontWeight = 'bold';
-				characterInfoContainer.appendChild(levelElement);
-
-				// 顯示角色圖片
-				const imgElement = document.createElement('img');
-				imgElement.src = cha_img;
-				imgElement.style.position = 'absolute';
-				imgElement.style.left = '20px';
-				imgElement.style.top = '35px';
-				imgElement.style.width = '100px';
-				imgElement.style.height = '100px';
-				characterInfoContainer.appendChild(imgElement);
-
-				// 顯示角色名稱
-				const nameElement = document.createElement('div');
-				nameElement.textContent = cha_name;
-				nameElement.style.position = 'absolute';
-				nameElement.style.left = '70px';
-				nameElement.style.top = '140px';
-				nameElement.style.fontFamily = 'SimSun';
-				nameElement.style.fontSize = '12px';
-				nameElement.style.color = 'white';
-				nameElement.style.textAlign = 'center';
-				nameElement.style.transform = 'translate(-50%, -50%)';
-				characterInfoContainer.appendChild(nameElement);
-
-				// 顯示角色職業
-				const jobElement = document.createElement('div');
-				jobElement.textContent = cha_job;
-				jobElement.style.position = 'absolute';
-				jobElement.style.left = '70px';
-				jobElement.style.top = '160px';
-				jobElement.style.fontFamily = 'SimSun';
-				jobElement.style.fontSize = '12px';
-				jobElement.style.color = 'white';
-				jobElement.style.textAlign = 'center';
-				jobElement.style.transform = 'translate(-50%, -50%)';
-				characterInfoContainer.appendChild(jobElement);
-
-				// 將角色資訊容器添加到 signboard
-				signboard.appendChild(characterInfoContainer);
-			}
-
-
-
-			// 調用讀取角色資料
-			loadCharacterData(); // 加載資料
-
-			// 調用顯示角色資料的函數
-			displayCharacterInfo();
-
-			// 更新角色資料函數，接受新參數，並直接使用圖片 URL
-			function updateCharacterData(newLevel, newImgUrl, newName, newJob) {
-				cha_level = newLevel;
-				cha_img = newImgUrl; // 使用圖片 URL 而非 Base64
-				cha_name = newName;
-				cha_job = newJob;
-
-				// 儲存更新的角色資料到 localStorage
-				saveCharacterData();
-
-				// 重新顯示角色資料
+				// 調用顯示角色資料的函數
 				displayCharacterInfo();
-			}
 
+				// 頁面載入時同步資料庫資料
+				window.onload = async function () {
+				  const userID = localStorage.getItem('userID');
+				  if (userID) {
+					const result = await syncWithLinkCode(userID);
+					if (result.success) {
+					  console.log(result.message);
+					  if (result.data) {
+						const { level, img, name, job } = result.data;
+						cha_level = level;
+						cha_img = img;
+						cha_name = name;
+						cha_job = job;
 
+						saveCharacterData(); // 更新本地儲存
+						displayCharacterInfo(); // 更新顯示
+					  }
+					} else {
+					  console.error(result.message);
+					}
+				  }
+				};
 
 
 			function resetData() {
