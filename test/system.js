@@ -519,30 +519,57 @@
 				// 調用顯示角色資料的函數
 				displayCharacterInfo();
 
-				import { syncWithLinkCode } from './datasync.js';
+				import { syncFromFirestore, syncToFirestore } from './datasync.js';
 
 				// 頁面載入時同步資料庫資料
 				window.onload = async function () {
 					const userID = localStorage.getItem('userID');
 					if (userID) {
-						const result = await syncWithLinkCode(userID);
+						closeDialog(); // 確保對話框關閉避免多操作
+						const result = await syncFromFirestore(userID);
 						if (result.success) {
-							console.log(result.message);
-							if (result.data) {
-								const { level, img, name, job } = result.data;
-								cha_level = level;
-								cha_img = img;
-								cha_name = name;
-								cha_job = job;
+							const { level, img, name, job, signCounts } = result.data;
 
-								saveCharacterData(); // 更新本地儲存
-								displayCharacterInfo(); // 更新顯示
-							}
+							cha_level = level;
+							cha_img = img;
+							cha_name = name;
+							cha_job = job;
+							window.signCounts = signCounts || {};
+
+							saveCharacterData(); // 更新本地儲存
+							displayCharacterInfo(); // 更新顯示
 						} else {
 							console.error(result.message);
 						}
+					} else {
+						console.log("未找到本地用戶ID，將使用本地資料");
 					}
 				};
+
+				// 提供同步本地資料到資料庫的函數
+				export async function syncLocalDataToFirestore() {
+					const userID = localStorage.getItem('userID');
+					if (!userID) {
+						console.error("無法同步，因為本地沒有發行的用戶ID");
+						return;
+					}
+
+					const localData = {
+						level: cha_level,
+						img: cha_img,
+						name: cha_name,
+						job: cha_job,
+						signCounts: window.signCounts || {},
+					};
+
+					const result = await syncToFirestore(userID, localData);
+					if (result.success) {
+						console.log(result.message);
+					} else {
+						console.error(result.message);
+					}
+				}
+
 
 
 

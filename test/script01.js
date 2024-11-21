@@ -79,66 +79,59 @@ function case9() {
 }
 
 
-// Case 10: 判定同步狀態
 function case10() {
-    const isSync = isSynchronized();
+    const isSync = isSynchronized(); // datasync.js 判定同步狀態
     const userID = localStorage.getItem('userID');
     const syncStatus = isSync ? "#e#b已同步" : "#e#r未同步";
     const transferCode = userID ? `#e#r${userID}` : "無";
 
     typeText(`簽到資料同步狀態：${syncStatus}\r\n你的引繼代碼：${transferCode}`);
-    const options = [];
-
-    if (!isSync) {
-        options.push({ text: "發行引繼代碼", action: case11 });
-    }
-    options.push({ text: "輸入引繼代碼", action: case12 });
+    const options = [
+        ...(isSync ? [] : [{ text: "發行引繼代碼", action: case11 }]),
+        { text: "輸入引繼代碼", action: case12 }
+    ];
     showOptions(options);
 }
 
-// Case 11: 發行引繼代碼
 function case11() {
     closeDialog();
-    issueTransferCode(localStorageData)
+    issueTransferCode()
         .then(code => {
             openDialog();
-            typeText(`你的引繼代碼為：#e#r${code}\r\n角色簽到資料設定資料庫同步完成！\r\n可以在其他裝置/瀏覽器輸入一樣的引繼代碼同步簽到資料！`);
+            typeText(`你的引繼代碼為：#e#r${code}\r\n角色簽到資料設定資料庫同步完成！`);
             showBtnOk();
         })
         .catch(error => {
             openDialog();
-            case18(error.message); // 顯示資料庫連線失敗
+            case18(error.message);
         });
 }
 
-// Case 12: 輸入引繼代碼
 function case12() {
     typeText("請輸入引繼代碼：");
     showInputField();
     showBtnNext(() => {
         const code = getInputFieldValue();
         if (!code) {
-            case19(); // 無輸入，跳至提示
+            case19();
         } else {
             closeDialog();
             verifyTransferCode(code)
                 .then(data => {
                     if (!data) {
                         openDialog();
-                        case13(); // 引繼代碼不存在
-                    } else if (data.characterName !== localStorageData.characterName) {
-                        globalCharacterData = data;
+                        case13();
+                    } else if (data.characterName !== localStorage.getItem('characterName')) {
                         openDialog();
-                        case14(); // 資料不同
+                        case14(data);
                     } else {
-                        globalCharacterData = data;
                         openDialog();
-                        case15(); // 簽到進度不同
+                        case15(data);
                     }
                 })
                 .catch(error => {
                     openDialog();
-                    case18(error.message); // 資料庫連線失敗
+                    case18(error.message);
                 });
         }
     });
