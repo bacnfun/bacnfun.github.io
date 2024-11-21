@@ -58,3 +58,20 @@ async function checkCodeUnique(code) {
     const docSnap = await getDoc(docRef);
     return !docSnap.exists();
 }
+
+export async function syncWithLinkCode(linkCode) {
+    // Firebase Firestore 初始化代碼已經存在於 firebaseConfig.js
+    try {
+        const docRef = doc(db, "userID", linkCode);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            return { success: true, data: docSnap.data(), message: "同步成功" };
+        } else {
+            return { success: false, message: "未找到對應的用戶資料" };
+        }
+    } catch (error) {
+        console.error("同步失敗：", error);
+        return { success: false, message: "同步失敗，請稍後再試" };
+    }
+}

@@ -519,28 +519,31 @@
 				// 調用顯示角色資料的函數
 				displayCharacterInfo();
 
+				import { syncWithLinkCode } from './datasync.js';
+
 				// 頁面載入時同步資料庫資料
 				window.onload = async function () {
-				  const userID = localStorage.getItem('userID');
-				  if (userID) {
-					const result = await syncWithLinkCode(userID);
-					if (result.success) {
-					  console.log(result.message);
-					  if (result.data) {
-						const { level, img, name, job } = result.data;
-						cha_level = level;
-						cha_img = img;
-						cha_name = name;
-						cha_job = job;
+					const userID = localStorage.getItem('userID');
+					if (userID) {
+						const result = await syncWithLinkCode(userID);
+						if (result.success) {
+							console.log(result.message);
+							if (result.data) {
+								const { level, img, name, job } = result.data;
+								cha_level = level;
+								cha_img = img;
+								cha_name = name;
+								cha_job = job;
 
-						saveCharacterData(); // 更新本地儲存
-						displayCharacterInfo(); // 更新顯示
-					  }
-					} else {
-					  console.error(result.message);
+								saveCharacterData(); // 更新本地儲存
+								displayCharacterInfo(); // 更新顯示
+							}
+						} else {
+							console.error(result.message);
+						}
 					}
-				  }
 				};
+
 
 
 			function resetData() {
