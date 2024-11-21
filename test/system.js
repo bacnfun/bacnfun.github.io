@@ -519,13 +519,7 @@
 				// 調用顯示角色資料的函數
 				displayCharacterInfo();
 
-
-							import {
-				  publishLinkCode,
-				  verifyAndSync,
-				  syncFromFirestore,
-				  syncToFirestore,
-				} from "./datasync.js";
+				import { syncFromFirestore, syncToFirestore } from "./datasync.js";
 
 				// 頁面載入時檢查是否有 userID 並初始化
 				window.onload = async function () {
@@ -550,8 +544,6 @@
 					}
 				  }
 				};
-				}
-
 
 
 
