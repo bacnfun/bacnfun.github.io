@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+	<link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="manifest.json">
+	<meta name="msapplication-TileImage" content="ms-icon-144x144.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七日怪公勳章計數小工具</title>
+	
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+		
+    <!-- 雲朵容器 -->
+    <div class="clouds" id="cloudContainer">
+	 <!-- 本地音樂播放器 -->
+			<audio id="bgmPlayer" loop autoplay>
+				<source src="bgm.ogg" type="audio/ogg">
+				您的瀏覽器不支援音頻元素。
+			</audio>
+
+			<!-- 喇叭圖示，點擊控制播放狀態 -->
+			<img id="playButton" src="img/play.png" alt="音樂控制">
+
+	
+        <img src="img/cloud_1.png" class="cloud" id="cloud1">
+        <img src="img/cloud_2.png" class="cloud" id="cloud2">
+        <img src="img/cloud_3.png" class="cloud" id="cloud3">
+        <img src="img/cloud_4.png" class="cloud" id="cloud4">
+        <img src="img/cloud_5.png" class="cloud" id="cloud5">
+        <img src="img/cloud_6.png" class="cloud" id="cloud6">
+        
+        <!-- 熱氣球 -->
+        <img src="img/balloon.png" class="balloon" id="balloon1">
+        <img src="img/balloon.png" class="balloon" id="balloon2">
+
+
+        <!-- 山脈背景 -->
+        <img src="img/Montain_a.png" class="mountain" id="mountainA">
+        <img src="img/Montain_b.png" class="mountain" id="mountainB">
+
+        <!-- 湖泊背景 -->
+        <img src="img/lake_a.png" class="lake" id="lakeA">
+        <img src="img/lake_b.png" class="lake" id="lakeB">
+		
+		<!-- 兩隻 Yeti 怪物 -->
+		<img src="img/yeti_0.png" class="yeti" id="yeti1">
+		<img src="img/yeti_0.png" class="yeti" id="yeti2">
+	
+			<!-- 前景的樹木 -->
+			<div class="jungleContainer">	
+				<!-- 森林 -->
+				<img src="img/jungle_1.png" class="jungle-bg1">
+				<img src="img/jungle_2.png" class="jungle-bg2">
+				<!-- 後面的瞭望塔 -->
+				<img src="img/tower.png" class="tower">
+			<!-- 看板 -->
+			<div class="boardContainer">
+				<img src="img/board.png" class="board" id="board" />
+
+				<!-- 用於顯示星期和獎勵圖片的容器 -->
+				<div id="display-container" style="position: absolute; left: 140px; top: 145px; width: 308px; height: 204px;pointer-events: none;">
+					<img id="day-image" style="position: absolute;" src="" alt="Day Image">
+					<img id="today-overlay" style="position: absolute; left: 213px; top: 0px; width: 41px; height: 42px; display: none;" src="img/today.png" alt="Today Overlay">
+				</div>
+
+				<!-- 可點擊範圍 -->
+				<div class="clickableArea" id="clickableArea1" onclick="changeDay(-1)"></div>
+				<div class="clickableArea" id="clickableArea2" onclick="changeDay(1)"></div>
+			</div>
+				<!-- 商店 -->
+				<img src="img/shop.png" class="shop">
+				<img src="img/shop_2.png" class="shop_2">
+				<!--柵欄+門-->
+				<img src="img/fence.png" class="fence">
+			</div>
+		<!-- 地板A -->
+		<div class="floor"></div>
+		<div class="floor2"></div>
+		
+		<div id="npc">
+		  <img id="npc-image" src="img/NPC/stand.0.png" alt="NPC" width="115" height="86"/>
+		</div>
+		  <img id="npc-tag" src="img/NPC/npctag2.png" alt="npctag" width="115" height="45" />
+		  
+		<div id="signboard">
+			<div id="count-mon" class="sign-count">0</div>
+			<div id="count-tue" class="sign-count">0</div>
+			<div id="count-wed" class="sign-count">0</div>
+			<div id="count-thu" class="sign-count">0</div>
+			<div id="count-fri" class="sign-count">0</div>
+			<div id="count-sat" class="sign-count">0</div>
+			<div id="count-sun" class="sign-count">0</div>
+				<!-- 修正按鈕 -->
+				<div id="edit-button">
+				</div>
+
+				<!-- 確認和取消按鈕容器 (初始隱藏) -->
+				<div id="confirm-cancel-buttons" style="display: none; position: absolute; left: 184px; top: 145px;">
+					<img id="confirm-button" src="img/ok_1.png" alt="Confirm" width="83" height="26" 
+						onmouseover="this.src='img/ok_2.png'" onmouseout="this.src='img/ok_1.png'" onclick="confirmAction()">
+					<img id="cancel-button" src="img/cancel_1.png" alt="Cancel" width="83" height="26" 
+						style="margin-left: 5px;" onmouseover="this.src='img/cancel_2.png'" onmouseout="this.src='img/cancel_1.png'" onclick="cancelAction()">
+				</div>
+
+		</div>
+
+	</div>
+		<!-- 對話框 -->
+		<div id="dialog-box" style="display: none;">
+			<img id="dialog-bg" src="img/dlg/UtilDlgEx.png" width="519" height="228" style="position: absolute; top: 0; left: 0;">
+			<img id="close-button" src="img/dlg/BtClose_1.png" width="91" height="16" style="position: absolute; top: 206px; left: 15px;">
+			
+			<!-- NPC 圖片動畫 -->
+			<div id="dianpc-image" class="npc-animation">
+				<img src="img/NPC/pet.0.png" alt="NPC">
+			</div>
+			
+			<div id="dianpc-name">
+				<img src="img/dlg/UtilDlgEx.bar.png" alt="Name Background">
+				<div class="dianpc-name">休菲凱曼</div>
+			</div>
+			
+			<div id="dialog-text"></div>
+			<div id="dialog-options"></div> <!-- 這裡會顯示選項 -->
+			<div id="dialog-input" style="display: none; position: absolute; top: 170px; left: 160px;"></div> <!-- 輸入框 -->
+		</div>
+
+
+</body>
+	<script src="system.js"></script>
+	<script type="module" src="./firebaseConfig.js"></script>
+	<script type="module" src="./test.js"></script>
+	<script type="module" src="./datasync.js"></script>
+	<script src="dialogFunctions.js"></script>
+	<script src="union.js"></script>
+	<script src="script01.js" defer></script>
+	<script>
+	</script>
+
+</body>
+</html>
