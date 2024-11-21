@@ -1,5 +1,5 @@
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-import { firebaseApp } from "./firebaseConfig.js";
+import { firebaseApp } from "firebaseConfig.js";
 
 const db = getFirestore(firebaseApp);
 
