@@ -15,11 +15,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 
 // Initialize Firestore and Analytics
-const firestore = getFirestore(app);
-const analytics = getAnalytics(app);
+const firestore = getFirestore(firebaseApp);
+const analytics = getAnalytics(firebaseApp);
 
-// Export Firestore for use in other modules
-export { firestore };
+// Export Firebase app and Firestore for use in other modules
+export { firebaseApp, firestore };
