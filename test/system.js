@@ -411,10 +411,6 @@
 			}
 
 
-
-
-				import { syncWithLinkCode } from './datasync.js';
-
 				// 預設資料：將角色名稱設為 "尚未設定角色"
 				let cha_name = '尚未設定角色'; // 字串形式的角色名稱
 
