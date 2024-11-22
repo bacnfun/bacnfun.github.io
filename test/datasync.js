@@ -45,7 +45,7 @@ export async function syncFromFirestore(userID) {
 }
 
 // 發行引繼代碼並同步本地資料
-export async function publishCodeFromLocalStorage() {
+export async function publishLinkCode() {
   try {
     const characterData = JSON.parse(localStorage.getItem("characterData")) || {};
     const signCounts = JSON.parse(localStorage.getItem("signCounts")) || {
@@ -83,6 +83,10 @@ export async function publishCodeFromLocalStorage() {
     return { success: false, message: `發行過程中發生錯誤: ${error.message}` };
   }
 }
+
+
+// 添加別名以保留對舊名稱的支持
+export { publishLinkCode as publishCodeFromLocalStorage };
 
 
 // 驗證引繼代碼並同步資料
