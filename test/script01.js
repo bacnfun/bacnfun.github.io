@@ -100,7 +100,7 @@ function case10() {
 
 function case11() {
   closeDialog();
-  publishCodeFromLocalStorage()
+  publishLinkCode()
     .then((result) => {
       openDialog();
       if (result.success) {
