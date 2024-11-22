@@ -85,10 +85,6 @@ export async function publishCodeFromLocalStorage() {
 }
 
 
-// 添加別名以保留對舊名稱的支持
-export { publishLinkCode as publishCodeFromLocalStorage };
-
-
 // 驗證引繼代碼並同步資料
 export async function verifyAndSync(linkCode) {
   try {
