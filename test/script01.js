@@ -104,17 +104,24 @@ function case10() {
 
 
 function case11() {
+  // 從 localStorage 讀取資料
+  const characterData = JSON.parse(localStorage.getItem("characterData")) || {};
+  const cha_level = characterData.level || 10; // 預設等級
+  const cha_img = characterData.img || 'img/signboard/defaultcha.png'; // 預設圖片
+  const cha_name = characterData.name || '尚未設定角色'; // 預設名稱
+  const cha_job = characterData.job || '初心者'; // 預設職業
+
   const localData = {
     level: cha_level,
     img: cha_img,
     name: cha_name,
     job: cha_job,
-    signCounts: window.signCounts,
+    signCounts: JSON.parse(localStorage.getItem("signCounts")) || {}, // 從 localStorage 獲取簽到次數
   };
 
-  closeDialog();
+  closeDialog(); // 關閉對話框
   publishLinkCode(localData).then((result) => {
-    openDialog();
+    openDialog(); // 重新開啟對話框
     if (result.success) {
       typeText(`你的引繼代碼為： #e#r${result.linkCode}\n角色簽到資料設定資料庫同步完成！`);
       showBtnOk();
@@ -124,6 +131,7 @@ function case11() {
     }
   });
 }
+
 
 function case12() {
   typeText("請輸入引繼代碼：");
