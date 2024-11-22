@@ -99,7 +99,7 @@ function case10() {
       text: "發行引繼代碼",
       action: async function () {
         closeDialog(); // 關閉當前對話框
-        const result = await publishCodeFromLocalStorage();
+        const result = await publishLinkCode();
         if (result.success) {
           // 成功後跳轉到 case11
           case11(result.linkCode);
