@@ -45,67 +45,80 @@ export async function syncFromFirestore(userID) {
 }
 
 // 發行引繼代碼並同步本地資料
-export async function publishLinkCode(localData) {
-  let linkCode;
-  let isUnique = false;
+export async function publishCodeFromLocalStorage() {
+  try {
+    const localData = JSON.parse(localStorage.getItem("characterData")) || {};
+    let linkCode;
+    let isUnique = false;
 
-  // 確保生成的代碼唯一
-  while (!isUnique) {
-    linkCode = generateLinkCode();
-    isUnique = await isLinkCodeUnique(linkCode);
-  }
+    // 確保生成的代碼唯一
+    while (!isUnique) {
+      linkCode = generateLinkCode();
+      isUnique = await isLinkCodeUnique(linkCode);
+    }
 
-  const syncResult = await syncToFirestore(linkCode, localData);
-  if (syncResult.success) {
-    localStorage.setItem("userID", linkCode);
-    return { success: true, linkCode };
-  } else {
-    return { success: false, message: syncResult.message };
+    // 同步資料到 Firestore
+    const syncResult = await syncToFirestore(linkCode, localData);
+    if (syncResult.success) {
+      localStorage.setItem("userID", linkCode);
+      return { success: true, linkCode };
+    } else {
+      return { success: false, message: syncResult.message };
+    }
+  } catch (error) {
+    return { success: false, message: `發行過程中發生錯誤: ${error.message}` };
   }
 }
 
 // 驗證引繼代碼並同步資料
 export async function verifyAndSync(linkCode) {
-  const result = await syncFromFirestore(linkCode);
-  if (!result.success) {
-    return { success: false, message: result.message };
+  try {
+    const result = await syncFromFirestore(linkCode);
+    if (!result.success) {
+      return { success: false, message: "引繼代碼不存在" };
+    }
+
+    const remoteData = result.data;
+    const localData = JSON.parse(localStorage.getItem("characterData")) || {};
+
+    // 比對角色名稱
+    if (remoteData.name !== localData.name) {
+      return { success: false, message: "角色名稱不一致", dbData: remoteData };
+    }
+
+    return { success: true, dbData: remoteData, localData };
+  } catch (error) {
+    return { success: false, message: `驗證過程中發生錯誤: ${error.message}` };
   }
-
-  const data = result.data;
-  const localData = JSON.parse(localStorage.getItem("characterData")) || {};
-
-  // 比對角色名稱
-  if (data.name !== localData.name) {
-    return { success: false, message: "角色名稱不一致", data };
-  }
-
-  return { success: true, data };
 }
 
 // 比對並同步簽到資料
 export async function compareAndSyncSignData(linkCode) {
-  const result = await syncFromFirestore(linkCode);
-  if (!result.success) {
-    return { success: false, message: result.message };
+  try {
+    const result = await syncFromFirestore(linkCode);
+    if (!result.success) {
+      return { success: false, message: result.message };
+    }
+
+    const remoteData = result.data;
+    const localData = JSON.parse(localStorage.getItem("characterData")) || {};
+    const remoteLastSignDate = remoteData.lastSignDate || "0000-00-00";
+    const localLastSignDate = localData.lastSignDate || "0000-00-00";
+
+    // 判斷最新簽到數據
+    if (new Date(remoteLastSignDate) > new Date(localLastSignDate)) {
+      // 使用遠端資料覆蓋本地
+      localStorage.setItem("characterData", JSON.stringify(remoteData));
+      return { success: true, source: "remote", message: "使用遠端資料同步成功" };
+    } else if (new Date(remoteLastSignDate) < new Date(localLastSignDate)) {
+      // 將本地資料同步到遠端
+      await syncToFirestore(linkCode, localData);
+      return { success: true, source: "local", message: "使用本地資料同步成功" };
+    }
+
+    // 資料相同
+    return { success: true, source: "equal", message: "本地與遠端資料一致" };
+  } catch (error) {
+    return { success: false, message: `同步過程中發生錯誤: ${error.message}` };
   }
-
-  const remoteData = result.data;
-  const localData = JSON.parse(localStorage.getItem("characterData")) || {};
-
-  const remoteLastSignDate = remoteData.lastSignDate || "0000-00-00";
-  const localLastSignDate = localData.lastSignDate || "0000-00-00";
-
-  // 判斷最新簽到數據
-  if (new Date(remoteLastSignDate) > new Date(localLastSignDate)) {
-    // 使用遠端資料覆蓋本地
-    localStorage.setItem("characterData", JSON.stringify(remoteData));
-    return { success: true, source: "remote", message: "使用遠端資料同步成功" };
-  } else if (new Date(remoteLastSignDate) < new Date(localLastSignDate)) {
-    // 將本地資料同步到遠端
-    await syncToFirestore(linkCode, localData);
-    return { success: true, source: "local", message: "使用本地資料同步成功" };
-  }
-
-  // 資料相同
-  return { success: true, source: "equal", message: "本地與遠端資料一致" };
 }
