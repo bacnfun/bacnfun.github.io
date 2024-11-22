@@ -45,9 +45,23 @@ export async function syncFromFirestore(userID) {
 }
 
 // 發行引繼代碼並同步本地資料
-export async function publishLinkCode() {
+export async function publishCodeFromLocalStorage() {
   try {
-    const localData = JSON.parse(localStorage.getItem("characterData")) || {};
+    const characterData = JSON.parse(localStorage.getItem("characterData")) || {};
+    const signCounts = JSON.parse(localStorage.getItem("signCounts")) || {
+      mon: 0, tue: 0, wed: 0, thu: 0, fri: 0, sat: 0, sun: 0
+    };
+    const totalSignCount = Object.values(signCounts).reduce((sum, count) => sum + count, 0);
+    const lastSignDate = localStorage.getItem("daysign") || "0000-00-00";
+
+    // 合併完整數據
+    const localData = {
+      ...characterData,
+      signCounts,
+      totalSignCount,
+      lastSignDate
+    };
+
     let linkCode;
     let isUnique = false;
 
@@ -69,6 +83,7 @@ export async function publishLinkCode() {
     return { success: false, message: `發行過程中發生錯誤: ${error.message}` };
   }
 }
+
 
 // 添加別名以保留對舊名稱的支持
 export { publishLinkCode as publishCodeFromLocalStorage };
