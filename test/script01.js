@@ -83,10 +83,10 @@ function case9() {
 function case10() {
   const userID = localStorage.getItem("userID");
   const syncStatus = userID ? "#e#b已同步" : "#e#r未同步";
-  const linkCode = userID ? `#e#r${userID}` : "無";
+  const linkCode = userID ? `#e#r${userID}` : "#e#r無";
 
   // 顯示同步狀態和引繼代碼
-  typeText(`簽到資料同步狀態： ${syncStatus}\n#n你的引繼代碼： ${linkCode}`);
+  typeText(`簽到資料同步狀態： ${syncStatus}\n#g你的引繼代碼： ${linkCode}`);
 
   // 動態設置選項
   const options = [
