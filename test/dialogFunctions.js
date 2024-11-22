@@ -392,3 +392,19 @@ function removeChar() {
         charContainer.remove(); // 移除圖片容器
     }
 }
+
+// 發行引繼代碼按鈕調用的功能
+function handlePublishLinkCode() {
+    closeDialog(); // 關閉當前對話框
+
+    // 調用 datasync.js 的 publishCodeFromLocalStorage
+    publishCodeFromLocalStorage().then((result) => {
+        if (result.success) {
+            case11(result.linkCode); // 成功跳轉到 case11
+        } else {
+            case18(result.message); // 發行失敗，跳轉到 case18
+        }
+    }).catch((error) => {
+        case18(`發行過程中出現錯誤: ${error.message}`); // 未預期錯誤
+    });
+}

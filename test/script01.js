@@ -90,29 +90,19 @@ function case10() {
   const options = [{ text: "輸入引繼代碼", action: case12 }];
 
   if (!userID) {
-    options.unshift({ text: "發行引繼代碼", action: case11 });
-  }
+    options.unshift({ text: "發行引繼代碼", action: handlePublishLinkCode });
+}
 
   showOptions(options);
 }
 
 
 
-function case11() {
-  closeDialog();
-  publishLinkCode()
-    .then((result) => {
-      openDialog();
-      if (result.success) {
-        typeText(`你的引繼代碼為： #e#r${result.linkCode}\n角色簽到資料設定資料庫同步完成！`);
-        showBtnOk();
-      } else {
-        case18(result.message);
-      }
-    })
-    .catch((error) => {
-      case18(`發行過程中出現錯誤: ${error.message}`);
-    });
+// Case 11: 顯示引繼代碼
+function case11(linkCode) {
+    openDialog();
+    typeText(`你的引繼代碼為： #e#r${linkCode}\n角色簽到資料設定資料庫同步完成！`);
+    showBtnOk();
 }
 
 
