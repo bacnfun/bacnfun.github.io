@@ -275,7 +275,7 @@
 
 				  // 顯示角色等級
 				  const levelElement = document.createElement('div');
-				  levelElement.textContent = `Lv. ${cha_level}`;
+				  levelElement.textContent = `${cha_level}`;
 				  levelElement.style.position = 'absolute';
 				  levelElement.style.left = '72px';
 				  levelElement.style.top = '23px';
