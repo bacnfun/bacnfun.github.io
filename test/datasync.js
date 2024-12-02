@@ -96,9 +96,6 @@ async function verifyAndSync(linkCode) {
   }
 }
 
-// 將函數掛載到全域（供調試或其他模組使用）
-window.verifyAndSync = verifyAndSync;
-
 // 比對並同步簽到資料
 export async function compareAndSyncSignData(linkCode) {
   try {
