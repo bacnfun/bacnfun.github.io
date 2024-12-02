@@ -101,7 +101,7 @@ function case10() {
 // Case 11: 顯示引繼代碼
 function case11(linkCode) {
     openDialog();
-    typeText(`你的引繼代碼為： #e#r${linkCode}\n角色簽到資料設定資料庫同步完成！`);
+    typeText(`\r\n\r\n你的引繼代碼為： #e#r${linkCode}\n\r\n#g角色簽到資料設定資料庫同步完成！`);
     showBtnOk();
 }
 
