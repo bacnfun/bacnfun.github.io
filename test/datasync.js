@@ -75,7 +75,7 @@ export { publishLinkCode as publishCodeFromLocalStorage };
 
 
 // 驗證引繼代碼並同步資料
-async function verifyAndSync(linkCode) {
+export async function verifyAndSync(linkCode) {
   try {
     const result = await syncFromFirestore(linkCode);
     if (!result.success) {
