@@ -122,14 +122,35 @@ function case12() {
       .then((result) => {
         openDialog(); // 開啟新的對話框
         if (result.success) {
-          const localData = result.localData || {};
-          const dbData = result.dbData || {};
+          // 從 localStorage 解析本地數據
+          const localCharacterData = JSON.parse(localStorage.getItem("characterData")) || {};
+          const localSignCounts = JSON.parse(localStorage.getItem("signCounts")) || {};
+          const localLastSignDate = formatSignDate(localStorage.getItem("daysign") || "000000"); // 格式化本地日期
+          const localTotalSignCount = Object.values(localSignCounts).reduce((sum, count) => sum + count, 0);
 
-          // 根據比對結果跳轉到不同的 case
-          if (localData.name !== dbData.name) {
+          // 資料庫數據
+          const dbData = result.dbData || {};
+          const dbLastSignDate = formatSignDate(dbData.lastSignDate || "000000"); // 格式化資料庫日期
+          const dbTotalSignCount = dbData.totalSignCount || 0;
+
+          // 判斷資料是否相符
+          if (localCharacterData.name !== dbData.name) {
             case14(dbData); // 資料不符，跳到 case14
-          } else if (localData.lastSignDate !== dbData.lastSignDate) {
-            case15(localData, dbData); // 簽到進度不符，跳到 case15
+          } else if (localLastSignDate !== dbLastSignDate || localTotalSignCount !== dbTotalSignCount) {
+            // 傳入比對後的本地和資料庫數據到 case15
+            case15(
+              {
+                name: localCharacterData.name,
+                lastSignDate: localLastSignDate,
+                totalSignCount: localTotalSignCount,
+                img: localCharacterData.img,
+              },
+              {
+                ...dbData,
+                lastSignDate: dbLastSignDate,
+                totalSignCount: dbTotalSignCount,
+              }
+            );
           } else {
             case16(); // 資料完全一致，跳到 case16
           }
@@ -147,6 +168,7 @@ function case12() {
       });
   });
 }
+
 
 
 
@@ -172,33 +194,15 @@ function case14(dbData) {
 
 // Case 15: 簽到進度不同
 function case15(localData, dbData) {
-  // 從 localStorage 解析數據
-  const localCharacterData = JSON.parse(localStorage.getItem("characterData")) || {};
-  const localSignCounts = JSON.parse(localStorage.getItem("signCounts")) || {};
-  const localLastSignDate = localStorage.getItem("daysign") || "0000-00-00";
+  const syncSource = localData.lastSignDate > dbData.lastSignDate ? "local" : "database";
 
-  // 計算本地總簽到次數
-  const localTotalSignCount = Object.values(localSignCounts).reduce((sum, count) => sum + count, 0);
-
-  // 檢查並補全資料庫數據
-  const dbLastSignDate = dbData.lastSignDate || "0000-00-00";
-  const dbTotalSignCount = dbData.totalSignCount || 0;
-
-  // 確定同步來源
-  const syncSource = new Date(localLastSignDate) > new Date(dbLastSignDate) ? "local" : "database";
-
-  // 顯示角色圖片
-  ShowChar(dbData.img || localCharacterData.img);
-
-  // 顯示對話框內容
+  ShowChar(dbData.img);
   typeText(
-    `\r\n\r\n\r\n你輸入的角色為 #e#b${dbData.name || localCharacterData.name}\r\n本機最後簽到時間 ${localLastSignDate} (已簽到次數：${localTotalSignCount})\r\n資料庫最後簽到時間 ${dbLastSignDate} (已簽到次數：${dbTotalSignCount})\r\n是否以最新的${
+    `\r\n\r\n\r\n你輸入的角色為 #e#b${dbData.name}\r\n本機最後簽到時間 ${localData.lastSignDate} (已簽到次數：${localData.totalSignCount})\r\n資料庫最後簽到時間 ${dbData.lastSignDate} (已簽到次數：${dbData.totalSignCount})\r\n是否以最新的${
       syncSource === "local" ? "#e#r本機" : "#e#r資料庫"
     }資料進行簽到次數同步？`
   );
-
-  // 顯示選項按鈕
-  showBtnYesNo(() => synchronizeData(syncSource, localData, dbData), case17);
+  showBtnYesNo(case16, case17);
 }
 
 
@@ -211,6 +215,7 @@ function case16() {
 
 // Case 17: 取消同步
 function case17() {
+	removeChar()
     typeText("\r\n\r\n\r\n等你想清楚了再來找我吧！");
     showBtnOk();
 }

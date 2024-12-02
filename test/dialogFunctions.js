@@ -397,3 +397,15 @@ function getInputValue() {
   const inputField = document.getElementById('input-field');
   return inputField ? inputField.value.trim() : "";
 }
+
+
+// 將六位數格式轉換為標準日期格式
+function formatSignDate(dateStr) {
+  if (dateStr.length !== 6) return "未知日期"; // 如果格式不正確，返回 "未知日期"
+  
+  const year = `20${dateStr.slice(0, 2)}`; // 前兩位為年份
+  const month = dateStr.slice(2, 4);       // 中間兩位為月份
+  const day = dateStr.slice(4, 6);         // 最後兩位為日期
+
+  return `${year}-${month}-${day}`;
+}
