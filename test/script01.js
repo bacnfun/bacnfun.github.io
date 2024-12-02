@@ -151,7 +151,7 @@ function case12() {
 function case13() {
     removeInputField();
     removeNextButton();
-    typeText("你輸入的引繼代碼不存在，請重新輸入。");
+    typeText("\r\n\r\n\r\n你輸入的引繼代碼不存在，請重新輸入。");
     showBtnOk();
 }
 
@@ -171,7 +171,7 @@ function case15(localData, dbData) {
 
   ShowChar(dbData.CharacterLookUrl);
   typeText(
-    `你輸入的角色為 #e#b${dbData.CharacterName}\r\n本機最後簽到時間 ${localData.lastSignDate} (已簽到次數：${localData.totalSignCounts})\r\n資料庫最後簽到時間 ${dbData.lastSignDate} (已簽到次數：${dbData.totalSignCounts})\r\n是否以最新的${
+    `\r\n\r\n\r\n\r\n你輸入的角色為 #e#b${dbData.CharacterName}\r\n本機最後簽到時間 ${localData.lastSignDate} (已簽到次數：${localData.totalSignCounts})\r\n資料庫最後簽到時間 ${dbData.lastSignDate} (已簽到次數：${dbData.totalSignCounts})\r\n是否以最新的${
       syncSource === "local" ? "#e#r本機" : "#e#r資料庫"
     }資料進行簽到次數同步？`
   );
