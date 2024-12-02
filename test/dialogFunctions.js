@@ -37,8 +37,6 @@ function closeDialog() {
     textContainer.innerHTML = "";  // 清空文本
     optionsContainer.innerHTML = "";  // 清空選項
 
-    // 清除逐字顯示 interval
-    clearInterval(typeTextInterval);
 }
 
 
