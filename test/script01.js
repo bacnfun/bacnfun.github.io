@@ -134,8 +134,12 @@ function case12() {
             case16(); // 資料完全一致，跳到 case16
           }
         } else {
-          typeText(result.message); // 顯示錯誤訊息
-          showBtnOk();
+          if (result.message.includes("引繼代碼不存在")) {
+            case13(); // 引繼代碼不存在，跳到 case13
+          } else {
+            typeText(result.message); // 顯示其他錯誤訊息
+            showBtnOk();
+          }
         }
       })
       .catch((error) => {
@@ -143,6 +147,7 @@ function case12() {
       });
   });
 }
+
 
 
 
