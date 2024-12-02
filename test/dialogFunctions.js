@@ -392,3 +392,10 @@ function removeChar() {
         charContainer.remove(); // 移除圖片容器
     }
 }
+
+
+// 獲取輸入框中的值
+function getInputValue() {
+  const inputField = document.getElementById('input-field');
+  return inputField ? inputField.value.trim() : "";
+}

@@ -109,38 +109,39 @@ function case11(linkCode) {
 
 function case12() {
   typeText("請輸入引繼代碼：");
-  showInputField();
+  showInputField(); // 顯示輸入框
   showBtnNext(() => {
-    const inputCode = getInputValue();
+    const inputCode = getInputValue(); // 獲取輸入框的值
     if (!inputCode) {
-      case19();
+      case19(); // 如果未輸入代碼，跳到 case19
       return;
     }
-    closeDialog();
-    verifyAndSync(inputCode)
+    closeDialog(); // 關閉當前對話框
+    verifyAndSync(inputCode) // 調用驗證與同步函數
       .then((result) => {
-        openDialog();
+        openDialog(); // 開啟新的對話框
         if (result.success) {
           // 判斷資料是否相符
           const localData = result.localData || {};
           const dbData = result.dbData || {};
           if (localData.name !== dbData.name) {
-            case14(dbData);
+            case14(dbData); // 資料不符，跳到 case14
           } else if (localData.lastSignDate !== dbData.lastSignDate) {
-            case15(localData, dbData);
+            case15(localData, dbData); // 簽到進度不符，跳到 case15
           } else {
-            case16();
+            case16(); // 資料完全一致，跳到 case16
           }
         } else {
-          typeText(result.message);
+          typeText(result.message); // 顯示錯誤訊息
           showBtnOk();
         }
       })
       .catch((error) => {
-        case18(`驗證過程中出現錯誤: ${error.message}`);
+        case18(`驗證過程中出現錯誤: ${error.message}`); // 捕捉未預期的錯誤
       });
   });
 }
+
 
 
 
