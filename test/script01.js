@@ -81,48 +81,47 @@ function case9() {
 
 // Case 10: 判定同步狀態
 function case10() {
-  const userID = localStorage.getItem("userID");
-  const syncStatus = userID ? "#e#b已同步" : "#e#r未同步";
-  const linkCode = userID ? `#e#r${userID}` : "#e#r無";
+    const userID = localStorage.getItem("userID");
+    const syncStatus = userID ? "#e#b已同步" : "#e#r未同步";
+    const linkCode = userID ? `#e#r${userID}` : "#e#r無";
 
-  // 顯示同步狀態和引繼代碼
-  typeText(`簽到資料同步狀態： ${syncStatus}\n#g你的引繼代碼： ${linkCode}`);
+    // 顯示同步狀態和引繼代碼
+    typeText(`簽到資料同步狀態： ${syncStatus}\n#g你的引繼代碼： ${linkCode}`);
 
-  // 動態設置選項
-  const options = [
-    { text: "輸入引繼代碼", action: case12 } // 固定顯示輸入引繼代碼
-  ];
+    const options = [
+        { text: "輸入引繼代碼", action: case12 }
+    ];
 
-  if (!userID) {
-    // 若無 userID，顯示發行引繼代碼選項
-    options.unshift({
-      text: "發行引繼代碼",
-      action: async function () {
-        closeDialog(); // 關閉當前對話框
-        const result = await publishLinkCode();
-        if (result.success) {
-          // 成功後跳轉到 case11
-          case11(result.linkCode);
-        } else {
-          // 顯示錯誤訊息
-          typeText(`發行失敗：${result.message}`);
-          showBtnOk();
-        }
-      }
-    });
-  }
+    if (!userID) {
+        options.unshift({
+            text: "發行引繼代碼",
+            action: async () => {
+                try {
+                    closeDialog();
+                    const result = await publishCodeFromLocalStorage();
+                    if (result.success) {
+                        case11(result.linkCode); // 正確跳轉至 case11
+                    } else {
+                        console.error(result.message);
+                    }
+                } catch (error) {
+                    console.error("引繼代碼發行失敗：", error);
+                }
+            }
+        });
+    }
 
-  // 顯示動態選項
-  showOptions(options);
+    showOptions(options);
 }
 
-// Case 11: 顯示發行成功的引繼代碼
+
+
+// Case 11: 顯示引繼代碼
 function case11(linkCode) {
-  openDialog(); // 重新開啟對話框
-  typeText(`你的引繼代碼為： #e#r${linkCode}\n角色簽到資料設定資料庫同步完成！`);
-  showBtnOk();
+    openDialog();
+    typeText(`你的引繼代碼為： #e#r${linkCode}\n角色簽到資料設定資料庫同步完成！`);
+    showBtnOk();
 }
-
 
 
 
