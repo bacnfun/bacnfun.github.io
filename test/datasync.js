@@ -47,21 +47,7 @@ export async function syncFromFirestore(userID) {
 // 發行引繼代碼並同步本地資料
 export async function publishLinkCode() {
   try {
-    const characterData = JSON.parse(localStorage.getItem("characterData")) || {};
-    const signCounts = JSON.parse(localStorage.getItem("signCounts")) || {
-      mon: 0, tue: 0, wed: 0, thu: 0, fri: 0, sat: 0, sun: 0
-    };
-    const totalSignCount = Object.values(signCounts).reduce((sum, count) => sum + count, 0);
-    const lastSignDate = localStorage.getItem("daysign") || "0000-00-00";
-
-    // 合併完整數據
-    const localData = {
-      ...characterData,
-      signCounts,
-      totalSignCount,
-      lastSignDate
-    };
-
+    const localData = JSON.parse(localStorage.getItem("characterData")) || {};
     let linkCode;
     let isUnique = false;
 
@@ -84,13 +70,12 @@ export async function publishLinkCode() {
   }
 }
 
-
 // 添加別名以保留對舊名稱的支持
 export { publishLinkCode as publishCodeFromLocalStorage };
 
 
 // 驗證引繼代碼並同步資料
-export async function verifyAndSync(linkCode) {
+async function verifyAndSync(linkCode) {
   try {
     const result = await syncFromFirestore(linkCode);
     if (!result.success) {
@@ -110,6 +95,9 @@ export async function verifyAndSync(linkCode) {
     return { success: false, message: `驗證過程中發生錯誤: ${error.message}` };
   }
 }
+
+// 將函數掛載到全域（供調試或其他模組使用）
+window.verifyAndSync = verifyAndSync;
 
 // 比對並同步簽到資料
 export async function compareAndSyncSignData(linkCode) {

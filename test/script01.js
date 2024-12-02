@@ -106,9 +106,6 @@ function case11(linkCode) {
 }
 
 
-
-import { verifyAndSync } from './datasync.js'; // 確保路徑正確
-
 function case12() {
   typeText("請輸入引繼代碼：");
   showInputField(); // 顯示輸入框
@@ -143,7 +140,6 @@ function case12() {
       });
   });
 }
-
 
 
 
