@@ -79,7 +79,7 @@ export async function verifyAndSync(linkCode) {
   try {
     const result = await syncFromFirestore(linkCode);
     if (!result.success) {
-      case13();
+      return { success: false, message: "引繼代碼不存在" };
     }
 
     const remoteData = result.data;
