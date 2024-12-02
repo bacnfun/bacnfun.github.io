@@ -162,9 +162,9 @@ function case13() {
 
 // Case 14: 資料不同
 function case14(dbData) {
-  ShowChar(dbData.CharacterLookUrl);
+  ShowChar(dbData.img);
   typeText(
-    `\r\n\r\n\r\n你輸入的角色為 \r\n#r${dbData.GameWorldName}#n伺服器 等級 #e#r${dbData.UnionLevel} #g職業 #e#r${dbData.JobName} #e#b${dbData.CharacterName}#n \r\n#e#b是否要套用該角色資料？`
+    `\r\n\r\n\r\n你輸入的角色為 等級 #e#r${dbData.level} #g職業 #e#r${dbData.job} #e#b${dbData.name}#n \r\n#e#b是否要套用該角色資料？`
   );
   showBtnYesNo(case16, case17);
 }
@@ -172,16 +172,35 @@ function case14(dbData) {
 
 // Case 15: 簽到進度不同
 function case15(localData, dbData) {
-  const syncSource = localData.lastSignDate > dbData.lastSignDate ? "local" : "database";
+  // 從 localStorage 解析數據
+  const localCharacterData = JSON.parse(localStorage.getItem("characterData")) || {};
+  const localSignCounts = JSON.parse(localStorage.getItem("signCounts")) || {};
+  const localLastSignDate = localStorage.getItem("daysign") || "0000-00-00";
 
-  ShowChar(dbData.CharacterLookUrl);
+  // 計算本地總簽到次數
+  const localTotalSignCount = Object.values(localSignCounts).reduce((sum, count) => sum + count, 0);
+
+  // 檢查並補全資料庫數據
+  const dbLastSignDate = dbData.lastSignDate || "0000-00-00";
+  const dbTotalSignCount = dbData.totalSignCount || 0;
+
+  // 確定同步來源
+  const syncSource = new Date(localLastSignDate) > new Date(dbLastSignDate) ? "local" : "database";
+
+  // 顯示角色圖片
+  ShowChar(dbData.img || localCharacterData.img);
+
+  // 顯示對話框內容
   typeText(
-    `\r\n\r\n\r\n\r\n你輸入的角色為 #e#b${dbData.name}\r\n本機最後簽到時間 ${localData.lastSignDate} (已簽到次數：${localData.totalSignCount})\r\n資料庫最後簽到時間 ${dbData.lastSignDate} (已簽到次數：${dbData.totalSignCount})\r\n是否以最新的${
+    `\r\n\r\n\r\n你輸入的角色為 #e#b${dbData.name || localCharacterData.name}\r\n本機最後簽到時間 ${localLastSignDate} (已簽到次數：${localTotalSignCount})\r\n資料庫最後簽到時間 ${dbLastSignDate} (已簽到次數：${dbTotalSignCount})\r\n是否以最新的${
       syncSource === "local" ? "#e#r本機" : "#e#r資料庫"
     }資料進行簽到次數同步？`
   );
-  showBtnYesNo(case16, case17);
+
+  // 顯示選項按鈕
+  showBtnYesNo(() => synchronizeData(syncSource, localData, dbData), case17);
 }
+
 
 
 // Case 16: 確認同步完成
