@@ -179,19 +179,19 @@ function case15(localData, dbData) {
 
 // Case 16: 確認同步完成
 function case16() {
-    typeText("角色簽到資料設定資料庫同步完成！歡迎下次再使用！");
+    typeText("\r\n\r\n\r\n角色簽到資料設定資料庫同步完成！歡迎下次再使用！");
     showBtnOk();
 }
 
 // Case 17: 取消同步
 function case17() {
-    typeText("等你想清楚了再來找我吧！");
+    typeText("\r\n\r\n\r\n等你想清楚了再來找我吧！");
     showBtnOk();
 }
 
 // Case 18: 資料庫連線失敗
 function case18(errorMsg) {
-    typeText(`資料庫連線失敗：${errorMsg}`);
+    typeText(`\r\n\r\n\r\n資料庫連線失敗：${errorMsg}`);
     showBtnOk();
 }
 
@@ -199,6 +199,6 @@ function case18(errorMsg) {
 function case19() {
     removeInputField();
     removeNextButton();
-    typeText("你好像沒有輸入代碼耶？請重新輸入。");
+    typeText("\r\n\r\n\r\n你好像沒有輸入代碼耶？請重新輸入。");
     showBtnOk();
 }
