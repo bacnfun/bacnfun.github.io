@@ -116,13 +116,16 @@ function case12() {
       return;
     }
     closeDialog(); // 關閉當前對話框
-    verifyAndSync(inputCode) // 調用驗證與同步函數
+
+    // 調用全局的 handleVerifyAndSync 函數
+    window.handleVerifyAndSync(inputCode)
       .then((result) => {
         openDialog(); // 開啟新的對話框
         if (result.success) {
-          // 判斷資料是否相符
           const localData = result.localData || {};
           const dbData = result.dbData || {};
+
+          // 根據比對結果跳轉到不同的 case
           if (localData.name !== dbData.name) {
             case14(dbData); // 資料不符，跳到 case14
           } else if (localData.lastSignDate !== dbData.lastSignDate) {

@@ -373,6 +373,26 @@
 				// 將函數掛載到全域（供調試或其他模組使用）
 				window.handlePublishLinkCode = handlePublishLinkCode;
 
+				// 驗證引繼代碼並同步資料
+				async function handleVerifyAndSync(inputCode) {
+				  try {
+					const result = await verifyAndSync(inputCode); // 調用 datasync.js 中的函數
+					if (result.success) {
+					  const localData = result.localData || {};
+					  const dbData = result.dbData || {};
+
+					  // 返回比對結果到調用者
+					  return { success: true, localData, dbData };
+					} else {
+					  return { success: false, message: result.message }; // 返回失敗訊息
+					}
+				  } catch (error) {
+					return { success: false, message: `驗證過程中出現錯誤: ${error.message}` };
+				  }
+				}
+
+				// 將中間函數掛載到全局（供 script01.js 調用）
+				window.handleVerifyAndSync = handleVerifyAndSync;
 
 
 			function resetData() {
