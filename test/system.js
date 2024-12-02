@@ -364,9 +364,9 @@
 				  const localData = JSON.parse(localStorage.getItem("characterData")) || {};
 				  const result = await publishLinkCode(localData);
 				  if (result.success) {
-					console.log("引繼代碼發行成功：", result.linkCode);
+					case11(result.linkCode); // 成功跳轉到 case11
 				  } else {
-					console.error("引繼代碼發行失敗：", result.message);
+					case18(result.message); // 發行失敗，跳轉到 case18
 				  }
 				}
 				

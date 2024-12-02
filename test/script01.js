@@ -81,37 +81,19 @@ function case9() {
 
 // Case 10: 判定同步狀態
 function case10() {
-    const userID = localStorage.getItem("userID");
-    const syncStatus = userID ? "#e#b已同步" : "#e#r未同步";
-    const linkCode = userID ? `#e#r${userID}` : "#e#r無";
+  const userID = localStorage.getItem("userID");
+  const syncStatus = userID ? "#e#b已同步" : "#e#r未同步";
+  const linkCode = userID ? `#e#r${userID}` : "#e#r無";
 
-    // 顯示同步狀態和引繼代碼
-    typeText(`簽到資料同步狀態： ${syncStatus}\n#g你的引繼代碼： ${linkCode}`);
+  typeText(`簽到資料同步狀態： ${syncStatus}\n#g你的引繼代碼： ${linkCode}`);
 
-    const options = [
-        { text: "輸入引繼代碼", action: case12 }
-    ];
+  const options = [{ text: "輸入引繼代碼", action: case12 }];
 
-    if (!userID) {
-        options.unshift({
-            text: "發行引繼代碼",
-            action: async () => {
-                try {
-                    closeDialog();
-                    const result = await publishCodeFromLocalStorage();
-                    if (result.success) {
-                        case11(result.linkCode); // 正確跳轉至 case11
-                    } else {
-                        console.error(result.message);
-                    }
-                } catch (error) {
-                    console.error("引繼代碼發行失敗：", error);
-                }
-            }
-        });
-    }
+  if (!userID) {
+    options.unshift({ text: "發行引繼代碼", action: handlePublishLinkCode });
+}
 
-    showOptions(options);
+  showOptions(options);
 }
 
 
