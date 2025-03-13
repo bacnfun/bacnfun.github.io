@@ -1,0 +1,266 @@
+
+# lib/data_table/config.dart 파일에 설정 값이 더 있습니다
+
+mapleBalls:
+  - name: 나이트로드
+    imageFileName: "ball_race_char_30.png"
+    color: 0xFFBF9000
+  - name: 나이트워커
+    imageFileName: "ball_race_char_33.png"
+    color: 0xFFFC6F50
+  - name: 다크나이트
+    imageFileName: "ball_race_char_3.png"
+    color: 0xFFC55A11
+  - name: 데몬슬레이어
+    imageFileName: "ball_race_char_7.png"
+    color: 0xFF8FAADC
+  - name: 데몬어벤져
+    imageFileName: "ball_race_char_8.png"
+    color: 0xFFBF1818
+  - name: 듀얼블레이드
+    imageFileName: "ball_race_char_32.png"
+    color: 0xFFEE9BEE
+  - name: 라라
+    imageFileName: "ball_race_char_21.png"
+    color: 0xFFFFEF3D
+  - name: 루미너스
+    imageFileName: "ball_race_char_19.png"
+    color: 0xFFFF9966
+  - name: 메르세데스
+    imageFileName: "ball_race_char_28.png"
+    color: 0xFF9999FF
+  - name: 메카닉
+    imageFileName: "ball_race_char_43.png"
+    color: 0xFF00CC99
+  - name: 미하일
+    imageFileName: "ball_race_char_5.png"
+    color: 0xFFFF7C80
+  - name: 바이퍼
+    imageFileName: "ball_race_char_39.png"
+    color: 0xFFBF9000
+  - name: 배틀메이지
+    imageFileName: "ball_race_char_17.png"
+    color: 0xFF0892F5
+  - name: 보우마스터
+    imageFileName: "ball_race_char_23.png"
+    color: 0xFFC55A11
+  - name: 블래스터
+    imageFileName: "ball_race_char_6.png"
+    color: 0xFF8FAADC
+  - name: 비숍
+    imageFileName: "ball_race_char_15.png"
+    color: 0xFFBF1818
+  - name: 섀도어
+    imageFileName: "ball_race_char_31.png"
+    color: 0xFFEE9BEE
+  - name: 소울마스터
+    imageFileName: "ball_race_char_4.png"
+    color: 0xFF76DCB0
+  - name: 스트라이커
+    imageFileName: "ball_race_char_42.png"
+    color: 0xFFFF9966
+  - name: 신궁
+    imageFileName: "ball_race_char_24.png"
+    color: 0xFF9999FF
+  - name: 아델
+    imageFileName: "ball_race_char_11.png"
+    color: 0xFF00CC99
+  - name: 아란
+    imageFileName: "ball_race_char_9.png"
+    color: 0xFFFF7C80
+  - name: 아크
+    imageFileName: "ball_race_char_46.png"
+    color: 0xFFBF9000
+  - name: 아크메이지불독
+    imageFileName: "ball_race_char_13.png"
+    color: 0xFFFF7f50
+  - name: 아크메이지썬콜
+    imageFileName: "ball_race_char_14.png"
+    color: 0xFFC55A11
+  - name: 에반
+    imageFileName: "ball_race_char_18.png"
+    color: 0xFF8FAADC
+  - name: 엔젤릭버스터
+    imageFileName: "ball_race_char_45.png"
+    color: 0xFFBF1818
+  - name: 와일드헌터
+    imageFileName: "ball_race_char_27.png"
+    color: 0xFFEE9BEE
+  - name: 윈드브레이커
+    imageFileName: "ball_race_char_26.png"
+    color: 0xFFEE9BEE
+  - name: 은월
+    imageFileName: "ball_race_char_44.png"
+    color: 0xFF74E0EE
+  - name: 일리움
+    imageFileName: "ball_race_char_20.png"
+    color: 0xFFFF9966
+  - name: 제논
+    imageFileName: "ball_race_char_34.png"
+    color: 0xFF9999FF
+  - name: 제로
+    imageFileName: "ball_race_char_12.png"
+    color: 0xFF00CC99
+  - name: 카데나
+    imageFileName: "ball_race_char_36.png"
+    color: 0xFFFF7C80
+  - name: 카이저
+    imageFileName: "ball_race_char_10.png"
+    color: 0xFFEE9BEE
+  - name: 카인
+    imageFileName: "ball_race_char_29.png"
+    color: 0xFFCCA633
+  - name: 칼리
+    imageFileName: "ball_race_char_37.png"
+    color: 0xFFFF9966
+  - name: 캐논슈터
+    imageFileName: "ball_race_char_41.png"
+    color: 0xFF9999FF
+  - name: 캡틴
+    imageFileName: "ball_race_char_40.png"
+    color: 0xFF00CC99
+  - name: 키네시스
+    imageFileName: "ball_race_char_22.png"
+    color: 0xFFFF7C80
+  - name: 팔라딘
+    imageFileName: "ball_race_char_2.png"
+    color: 0xFFEE9BEE
+  - name: 패스파인더
+    imageFileName: "ball_race_char_25.png"
+    color: 0xFFCC3D3D
+  - name: 팬텀
+    imageFileName: "ball_race_char_35.png"
+    color: 0xFFFF9966
+  - name: 플레임위자드
+    imageFileName: "ball_race_char_16.png"
+    color: 0xFF9999FF
+  - name: 호영
+    imageFileName: "ball_race_char_38.png"
+    color: 0xFF00CC99
+  - name: 히어로
+    imageFileName: "ball_race_char_1.png"
+    color: 0xFFFF7C80
+
+normalBalls:
+  - color: 0xFFCC3333
+  - color: 0xFFCC5933
+  - color: 0xFFCC8033
+  - color: 0xFFCCA633
+  - color: 0xFFCCCC33
+  - color: 0xFFA6CC33
+  - color: 0xFF80CC33
+  - color: 0xFF33CC80
+  - color: 0xFF33CCA6
+  - color: 0xFF33CCCC
+  - color: 0xFF33A6CC
+  - color: 0xFF3380CC
+  - color: 0xFFCC33A6
+  - color: 0xFFCC3380
+  - color: 0xFF936C86
+  - color: 0xFFF28080
+  - color: 0xFFD4DE6E
+  - color: 0xFF76DCB0
+  - color: 0xFFEFF8E1
+  - color: 0xFFBD3728
+  - color: 0xFF008000
+  - color: 0xFF008080
+  - color: 0xFFFFFF00
+  - color: 0xFFFFA500
+  - color: 0xFFD2691E
+  - color: 0xFFFF7F50
+  - color: 0xFF6495ED
+  - color: 0xFFCD5D85
+  - color: 0xFFDDA3AB
+  - color: 0xFFADB5B7
+  - color: 0xFFB8860B
+  - color: 0xFF006400
+  - color: 0xFFBDB76B
+  - color: 0xFFFF1493
+  - color: 0xFFFA8072
+  - color: 0xFFDEB887
+  - color: 0xFF98FB98
+  - color: 0xFFBC8F8F
+  - color: 0xFFDB7093
+  - color: 0xFF228B22
+  - color: 0xFF00CED1
+  - color: 0xFF4682B4
+  - color: 0xFFCD853F
+  - color: 0xFFA52A2A
+  - color: 0xFFDCDCDC
+  - color: 0xFFF25764
+  - color: 0xFF739CBF
+  - color: 0xFF77CFF2
+  - color: 0xFFF2D1B3
+  - color: 0xFFA63F3F
+  - color: 0xFFBFBC8A
+  - color: 0xFFA88219
+  - color: 0xFFCC3D3D
+  - color: 0xFFF06161
+  - color: 0xFFBA602B
+  - color: 0xFF6A84B7
+  - color: 0xFF109D92
+  - color: 0xFFB0C4DE
+  - color: 0xFFFF69B4
+  - color: 0xFFFFC0CB
+  - color: 0xFFFFB6C1
+  - color: 0xFFFF9058
+  - color: 0xFFF56E48
+  - color: 0xFFFF982E
+  - color: 0xFFABB6BC
+  - color: 0xFFCC3F3F
+  - color: 0xFFA74444
+  - color: 0xFFFC6F50
+  - color: 0xFFFF542E
+  - color: 0xFFF9D1C8
+  - color: 0xFFD7B2A9
+  - color: 0xFFD4C99F
+  - color: 0xFFF2D467
+  - color: 0xFFFFC800
+  - color: 0xFFFFEF3D
+  - color: 0xFF867C12
+  - color: 0xFFCEE901
+  - color: 0xFF6DCB10
+  - color: 0xFF3C7205
+  - color: 0xFF4512DD
+  - color: 0xFFD6C9FF
+  - color: 0xFFEA08DB
+  - color: 0xFFEB7DE4
+  - color: 0xFF0892F5
+  - color: 0xFF8ED0FF
+  - color: 0xFF85A3B9
+  - color: 0xFF0DA6BA
+  - color: 0xFF74E0EE
+  - color: 0xFFCD5C5C
+  - color: 0xFFF08080
+  - color: 0xFFFFE4E1
+  - color: 0xFFFF6347
+  - color: 0xFFFF4500
+  - color: 0xFFF0E68C
+  - color: 0xFFFFFACD
+  - color: 0xFF9ACD32
+  - color: 0xFF90EE90
+  - color: 0xFF66CDAA
+  - color: 0xFFB0E0E6
+  - color: 0xFF00BFFF
+
+help:
+  - title: 레헬른 스피드
+    contents:
+      - "구슬을 아래로 떨어트려, 가장 먼저 목표지점에 도달하는 구슬이 승리합니다."
+      - "플레이할 메이플스토리의 직업을 고르거나, 저녁 메뉴를 고르 때도 사용할 수 있습니다."
+  - title: 게임 모드
+    contents:
+      - "악몽의 시계탑 : 구슬이 목표지점에 도달하기 전에 위로 튕겨내는 방해물이 존재하는 모드입니다."
+      - "스피드 레이스 : 빠른 속도로 진행되며, 중간에 구슬의 속도를 바꿔주는 아이템이 존재하는 모드입니다."
+  - title: 구슬 타입
+    contents:
+      - "메이플스토리 구슬: 메이플스토리의 캐릭터가 그려진 구슬로 게임을 진행합니다."
+      - "일반 구슬 : 다양한 색깔로 이루어진 구슬로 게임을 진행합니다."
+  - title: 구슬 추가
+    contents:
+      - "원하는 이름과 개수를 입력하고 '추가'버튼을 누르면, 설정한 만큼 구슬이 생성됩니다."
+  - title: 1등 구슬 예측하기
+    titleIcon: ic_predict_ball_race.png
+    contents:
+      - "어떤 구슬이 1등이 될지 예측해 볼 수 있습니다."
+      - "버튼을 누른 후 원하는 구슬을 선택하면, 게임 진행 시 카메라가 해당 구슬을 따라 움직입니다."
