@@ -2,142 +2,142 @@
 # lib/data_table/config.dart 파일에 설정 값이 더 있습니다
 
 mapleBalls:
-  - name: 나이트로드
+  - name: 夜使者
     imageFileName: "ball_race_char_30.png"
     color: 0xFFBF9000
-  - name: 나이트워커
+  - name: 暗夜行者
     imageFileName: "ball_race_char_33.png"
     color: 0xFFFC6F50
-  - name: 다크나이트
+  - name: 黑騎士
     imageFileName: "ball_race_char_3.png"
     color: 0xFFC55A11
-  - name: 데몬슬레이어
+  - name: 惡魔殺手
     imageFileName: "ball_race_char_7.png"
     color: 0xFF8FAADC
-  - name: 데몬어벤져
+  - name: 惡魔復仇者
     imageFileName: "ball_race_char_8.png"
     color: 0xFFBF1818
-  - name: 듀얼블레이드
+  - name: 影武者
     imageFileName: "ball_race_char_32.png"
     color: 0xFFEE9BEE
-  - name: 라라
+  - name: 菈菈
     imageFileName: "ball_race_char_21.png"
     color: 0xFFFFEF3D
-  - name: 루미너스
+  - name: 夜光
     imageFileName: "ball_race_char_19.png"
     color: 0xFFFF9966
-  - name: 메르세데스
+  - name: 精靈遊俠
     imageFileName: "ball_race_char_28.png"
     color: 0xFF9999FF
-  - name: 메카닉
+  - name: 機甲戰神
     imageFileName: "ball_race_char_43.png"
     color: 0xFF00CC99
-  - name: 미하일
+  - name: 米哈逸
     imageFileName: "ball_race_char_5.png"
     color: 0xFFFF7C80
-  - name: 바이퍼
+  - name: 拳霸
     imageFileName: "ball_race_char_39.png"
     color: 0xFFBF9000
-  - name: 배틀메이지
+  - name: 煉獄巫師
     imageFileName: "ball_race_char_17.png"
     color: 0xFF0892F5
-  - name: 보우마스터
+  - name: 箭神
     imageFileName: "ball_race_char_23.png"
     color: 0xFFC55A11
-  - name: 블래스터
+  - name: 爆拳槍神
     imageFileName: "ball_race_char_6.png"
     color: 0xFF8FAADC
-  - name: 비숍
+  - name: 主教
     imageFileName: "ball_race_char_15.png"
     color: 0xFFBF1818
-  - name: 섀도어
+  - name: 暗影神偷
     imageFileName: "ball_race_char_31.png"
     color: 0xFFEE9BEE
-  - name: 소울마스터
+  - name: 聖魂劍士
     imageFileName: "ball_race_char_4.png"
     color: 0xFF76DCB0
-  - name: 스트라이커
+  - name: 閃雷悍將
     imageFileName: "ball_race_char_42.png"
     color: 0xFFFF9966
-  - name: 신궁
+  - name: 神射手
     imageFileName: "ball_race_char_24.png"
     color: 0xFF9999FF
-  - name: 아델
+  - name: 阿戴爾
     imageFileName: "ball_race_char_11.png"
     color: 0xFF00CC99
-  - name: 아란
+  - name: 狂狼勇士
     imageFileName: "ball_race_char_9.png"
     color: 0xFFFF7C80
-  - name: 아크
+  - name: 亞克
     imageFileName: "ball_race_char_46.png"
     color: 0xFFBF9000
-  - name: 아크메이지불독
+  - name: 大魔導士（火毒）
     imageFileName: "ball_race_char_13.png"
     color: 0xFFFF7f50
-  - name: 아크메이지썬콜
+  - name: 大魔導士（冰雷）
     imageFileName: "ball_race_char_14.png"
     color: 0xFFC55A11
-  - name: 에반
+  - name: 龍魔導士
     imageFileName: "ball_race_char_18.png"
     color: 0xFF8FAADC
-  - name: 엔젤릭버스터
+  - name: 天使破壞者
     imageFileName: "ball_race_char_45.png"
     color: 0xFFBF1818
-  - name: 와일드헌터
+  - name: 狂豹獵人
     imageFileName: "ball_race_char_27.png"
     color: 0xFFEE9BEE
-  - name: 윈드브레이커
+  - name: 破風使者
     imageFileName: "ball_race_char_26.png"
     color: 0xFFEE9BEE
-  - name: 은월
+  - name: 隱月
     imageFileName: "ball_race_char_44.png"
     color: 0xFF74E0EE
-  - name: 일리움
+  - name: 伊利恩
     imageFileName: "ball_race_char_20.png"
     color: 0xFFFF9966
-  - name: 제논
+  - name: 傑諾
     imageFileName: "ball_race_char_34.png"
     color: 0xFF9999FF
-  - name: 제로
+  - name: 神之子
     imageFileName: "ball_race_char_12.png"
     color: 0xFF00CC99
-  - name: 카데나
+  - name: 卡蒂娜
     imageFileName: "ball_race_char_36.png"
     color: 0xFFFF7C80
-  - name: 카이저
+  - name: 凱撒
     imageFileName: "ball_race_char_10.png"
     color: 0xFFEE9BEE
-  - name: 카인
+  - name: 凱殷
     imageFileName: "ball_race_char_29.png"
     color: 0xFFCCA633
-  - name: 칼리
+  - name: 卡莉
     imageFileName: "ball_race_char_37.png"
     color: 0xFFFF9966
-  - name: 캐논슈터
+  - name: 重砲指揮官
     imageFileName: "ball_race_char_41.png"
     color: 0xFF9999FF
-  - name: 캡틴
+  - name: 槍神
     imageFileName: "ball_race_char_40.png"
     color: 0xFF00CC99
-  - name: 키네시스
+  - name: 凱內西斯
     imageFileName: "ball_race_char_22.png"
     color: 0xFFFF7C80
-  - name: 팔라딘
+  - name: 聖騎士
     imageFileName: "ball_race_char_2.png"
     color: 0xFFEE9BEE
-  - name: 패스파인더
+  - name: 開拓者
     imageFileName: "ball_race_char_25.png"
     color: 0xFFCC3D3D
-  - name: 팬텀
+  - name: 幻影俠盜
     imageFileName: "ball_race_char_35.png"
     color: 0xFFFF9966
-  - name: 플레임위자드
+  - name: 烈焰巫師
     imageFileName: "ball_race_char_16.png"
     color: 0xFF9999FF
-  - name: 호영
+  - name: 虎影
     imageFileName: "ball_race_char_38.png"
     color: 0xFF00CC99
-  - name: 히어로
+  - name: 英雄
     imageFileName: "ball_race_char_1.png"
     color: 0xFFFF7C80
 
@@ -244,23 +244,23 @@ normalBalls:
   - color: 0xFF00BFFF
 
 help:
-  - title: 레헬른 스피드
+  - title: 拉契爾恩競速
     contents:
-      - "구슬을 아래로 떨어트려, 가장 먼저 목표지점에 도달하는 구슬이 승리합니다."
-      - "플레이할 메이플스토리의 직업을 고르거나, 저녁 메뉴를 고르 때도 사용할 수 있습니다."
-  - title: 게임 모드
+      - "讓彈珠向下掉落，最先到達目標地點的彈珠獲勝。"
+      - "可以用來選擇要玩的《楓之谷》職業，或者決定晚餐菜單。"
+  - title: 遊戲模式
     contents:
-      - "악몽의 시계탑 : 구슬이 목표지점에 도달하기 전에 위로 튕겨내는 방해물이 존재하는 모드입니다."
-      - "스피드 레이스 : 빠른 속도로 진행되며, 중간에 구슬의 속도를 바꿔주는 아이템이 존재하는 모드입니다."
-  - title: 구슬 타입
+      - "夢魘鐘塔：這個模式中，在彈珠到達目標地點前，會有向上彈飛的障礙物干擾。"
+      - "競速賽：遊戲節奏快速，途中會有改變彈珠速度的道具出現。"
+  - title: 彈珠類型
     contents:
-      - "메이플스토리 구슬: 메이플스토리의 캐릭터가 그려진 구슬로 게임을 진행합니다."
-      - "일반 구슬 : 다양한 색깔로 이루어진 구슬로 게임을 진행합니다."
-  - title: 구슬 추가
+      - "《楓之谷》彈珠：使用印有《楓之谷》角色圖案的彈珠進行遊戲。"
+      - "一般彈珠：使用各種顏色的彈珠進行遊戲。"
+  - title: 新增彈珠
     contents:
-      - "원하는 이름과 개수를 입력하고 '추가'버튼을 누르면, 설정한 만큼 구슬이 생성됩니다."
-  - title: 1등 구슬 예측하기
+      - "輸入想要的名稱與數量後，按下『新增』按鈕，即可生成相應數量的彈珠。"
+  - title: 預測第一名彈珠
     titleIcon: ic_predict_ball_race.png
     contents:
-      - "어떤 구슬이 1등이 될지 예측해 볼 수 있습니다."
-      - "버튼을 누른 후 원하는 구슬을 선택하면, 게임 진행 시 카메라가 해당 구슬을 따라 움직입니다."
+      - "可以預測哪顆彈珠會獲得第一名。"
+      - "按下按鈕並選擇想要的彈珠後，遊戲進行時攝影機將會跟隨該彈珠移動。"
