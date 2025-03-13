@@ -46882,7 +46882,7 @@ G4(a){return A.dB(A.fd(A.aEm(a,B.cR,20,!0,B.cA),null,100),B.Y,null)},
 acs(){var s=null
 return A.cn(A.b([A.X(this.Qi($.bC().a,this.e,new A.av9(this)),10),A.X(A.am(s,s,B.f,s,s,s,s,s,s,s),27)],t.p),B.F,B.t)},
 P9(){var s=null,r=t.p
-return A.dJ(A.b([A.X(A.cn(A.b([A.X(A.am(s,s,B.f,s,s,B.BX,s,s,s,s),1),A.X(A.dJ(A.b([A.X(A.am(s,s,B.f,s,s,s,s,s,s,s),1),A.X(A.cn(A.b([A.dB(A.fd(A.aEm("\u9810\u6e2c\u7b2c\u4e00\u540d\u5f48\u73e0",B.cR,20,!0,B.cA),s,160),B.Y,s)],r),B.F,B.t),5),A.X(A.am(s,s,B.f,s,s,s,s,s,s,s),1)],r),B.a3,B.t),12)],r),B.F,B.t),3),A.X(A.cn(A.b([A.dB(A.fd(this.agJ("\u5f48\u73e0\uc744 \uc120\ud0dd\ud558\uc5ec 1\ub4f1\uc744 \uc608\uce21\ud560 \uc218 \uc788\uc2b5\ub2c8\ub2e4."),s,400),B.Y,s)],r),B.F,B.t),2)],r),B.a3,B.t)},
+return A.dJ(A.b([A.X(A.cn(A.b([A.X(A.am(s,s,B.f,s,s,B.BX,s,s,s,s),1),A.X(A.dJ(A.b([A.X(A.am(s,s,B.f,s,s,s,s,s,s,s),1),A.X(A.cn(A.b([A.dB(A.fd(A.aEm("\u9810\u6e2c\u7b2c\u4e00\u540d\u5f48\u73e0",B.cR,20,!0,B.cA),s,160),B.Y,s)],r),B.F,B.t),5),A.X(A.am(s,s,B.f,s,s,s,s,s,s,s),1)],r),B.a3,B.t),12)],r),B.F,B.t),3),A.X(A.cn(A.b([A.dB(A.fd(this.agJ("\u9ede\u64ca\u4e0b\u65b9\u7684\u5f48\u73e0\u9032\u884c\u7b2c\u4e00\u540d\u9810\u6e2c"),s,400),B.Y,s)],r),B.F,B.t),2)],r),B.a3,B.t)},
 P8(){return A.dB(A.lq("assets/images/lobby/btn_setting_done.png",new A.av1(this),1,267,199),B.Y,null)},
 Sq(){var s=this
 return s.Qi(s.r,s.f,new A.avd(s))},
@@ -105055,7 +105055,7 @@ return q})
 s($,"b5b","bn",()=>{var q,p,o=A.Ln().gwN()?5:7,n=A.Ln().gwN()?$.aC_():$.aBZ()
 n=A.aIA(30,1,50,0.5,n,A.ls(0,6),18,"map.tmx",100,A.ls(136,625),21,0.9,600,800)
 q=A.Ln().gwN()?$.aC_():$.aBZ()
-q=new A.a84(o,A.aq(["\uc545\ubabd\uc758 \uc2dc\uacc4\ud0d1",n,"\uc2a4\ud53c\ub4dc \ub808\uc774\uc2a4",A.aIA(30,0.8,10,0.05,q,A.ls(0,6),20,"map2.tmx",200,A.ls(136,625),26,0.6,600,800)],t.N,A.a2("Oo")))
+q=new A.a84(o,A.aq(["\u60e1\u5922\u6642\u9593\u5854",n,"\u7af6\u901f\u8cfd",A.aIA(30,0.8,10,0.05,q,A.ls(0,6),20,"map2.tmx",200,A.ls(136,625),26,0.6,600,800)],t.N,A.a2("Oo")))
 p=A.Ln().gwN()
 q.a=p?$.aC_():$.aBZ()
 q.b=p?"assets/images/intro/intro_portrait.png":"assets/images/intro/intro_landscape.png"
