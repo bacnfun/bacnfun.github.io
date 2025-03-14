@@ -46701,7 +46701,7 @@ n===$&&A.a()
 s=(n-1)*60
 n=s>0
 if(n)o.push(A.am(p,p,B.f,p,p,p,0.4*s,p,p,p))
-o.push(A.fd(this.Hu("\ub3c4\uc6c0\ub9d0",23,B.EC),60,p))
+o.push(A.fd(this.Hu("\u5e6b\u52a9",23,B.EC),60,p))
 if(n)o.push(A.am(p,p,B.f,p,p,p,0.6*s,p,p,p))
 n=$.bn().at
 n===$&&A.a()
