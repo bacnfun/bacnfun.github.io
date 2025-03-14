@@ -2,6 +2,18 @@
 # lib/data_table/config.dart 파일에 설정 값이 더 있습니다
 
 mapleBalls:
+  - name: 琳恩
+    imageFileName: "ball_race_char_50.png"
+    color: 0xFF379CB5
+  - name: 墨玄
+    imageFileName: "ball_race_char_49.png"
+    color: 0xFFB170EB 
+  - name: 陰陽師
+    imageFileName: "ball_race_char_48.png"
+    color: 0xFF715EB9
+  - name: 劍豪
+    imageFileName: "ball_race_char_47.png"
+    color: 0xFF9D1941
   - name: 夜使者
     imageFileName: "ball_race_char_30.png"
     color: 0xFFBF9000
