@@ -8440,7 +8440,7 @@ q=$.a4o()
 $.zj().jP(B.ME)
 q.azi()
 q=$.KX()
-q.b="\ub808\ud5ec\ub978 \uc2a4\ud53c\ub4dc"
+q.b="\u62c9\u5951\u723e\u6069\u5f48\u73e0\u7af6\u901f"
 j=A.aWg("live")
 q.a=j
 q.c="20240320_1131"
